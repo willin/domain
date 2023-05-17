@@ -2,26 +2,72 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --foreground-rgb: 0, 0, 0;
-  --background-start-rgb: 214, 219, 220;
-  --background-end-rgb: 255, 255, 255;
-}
+@layer base {
+  * {
+    user-select: none;
+    cursor: url('/images/default.cur'), default;
+  }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 0, 0, 0;
-    --background-end-rgb: 0, 0, 0;
+  a,
+  a *,
+  button,
+  button *,
+  .btn,
+  .btn *,
+  .prose .post-image,
+  .cursor-pointer * {
+    cursor: url('/images/pointer.cur'), pointer;
+  }
+
+  html {
+    /* transition: background-color 0.5s linear, color 0.25s linear; */
+    min-height: 100vh;
+    user-select: none;
+  }
+
+  div,
+  p {
+    @apply break-all;
+    user-select: none;
+  }
+
+  pre {
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+    user-select: none;
+  }
+
+  /* Remove Safari input shadow on mobile */
+  input[type='text'],
+  input[type='email'] {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+  }
+
+  table {
+    display: block;
+    max-width: fit-content;
+    overflow-x: auto;
+    white-space: nowrap;
   }
 }
 
-body {
-  color: rgb(var(--foreground-rgb));
-  background: linear-gradient(
-      to bottom,
-      transparent,
-      rgb(var(--background-end-rgb))
-    )
-    rgb(var(--background-start-rgb));
+@layer components {
+  #background {
+    @apply fixed inset-0 saturate-150 z-[-1];
+    background: url('/images/bg.jpg') no-repeat center center fixed;
+    background-size: cover;
+    transition: all 0.25s ease-in-out;
+    transform-style: preserve-3d;
+  }
+  #background.dark {
+    @apply brightness-50 saturate-100;
+    transform: rotate(-3deg) scale(1.2);
+    /* scaleX(-1); */
+  }
+}
+
+.react-date-picker__wrapper {
+  border: 0 !important;
 }
