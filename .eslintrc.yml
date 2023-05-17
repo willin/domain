@@ -1,0 +1,29 @@
+root: true
+extends:
+  - next/core-web-vitals
+  - eslint:recommended
+  - plugin:jsx-a11y/recommended
+  - plugin:@typescript-eslint/recommended-requiring-type-checking
+  - prettier
+parserOptions:
+  project: ./tsconfig.json
+  extraFileExtensions:
+    - .mjs
+rules:
+  no-unused-vars: 1
+  '@typescript-eslint/no-misused-promises': 0
+  '@typescript-eslint/no-unsafe-assignment': 0
+  'require-await': 0
+  '@typescript-eslint/require-await': 1
+  jsx-a11y/label-has-associated-control: 0
+  jsx-a11y/no-noninteractive-tabindex: 0
+  jsx-a11y/anchor-is-valid:
+    - error
+    - components:
+        - Link
+      specialLink:
+        - hrefLeft
+        - hrefRight
+      aspects:
+        - invalidHref
+        - preferButton
