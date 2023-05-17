@@ -17,18 +17,13 @@ function getLocale(request: NextRequest): string {
 }
 
 export function middleware(request: NextRequest) {
-  const pathname = request.nextUrl.pathname;
-
-  // // `/_next/` and `/api/` are ignored by the watcher, but we need to ignore files in `public` manually.
-  // // If you have one
-  // if (
-  //   [
-  //     '/manifest.json',
-  //     '/favicon.ico',
-  //     // Your other files in `public`
-  //   ].includes(pathname)
-  // )
-  //   return
+  let pathname = request.nextUrl.pathname;
+  if (pathname.endsWith('/') || pathname.includes('.')) {
+    // Remove trailing slash and dot
+  } else {
+    pathname += '/';
+  }
+  pathname = pathname === '/' ? '' : pathname;
 
   // Check if there is any supported locale in the pathname
   const pathnameIsMissingLocale = i18n.locales.every(
