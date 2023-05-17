@@ -10,9 +10,9 @@
     "format": "prettier --write \"**/*.{js,ts,tsx,md}\"",
     "prepare": "husky install",
     "pages:build": "npx @cloudflare/next-on-pages --experimental-minify",
-    "pages:deploy": "npm run pages:build && wrangler pages publish .vercel/output/static",
+    "pages:deploy": "npm run pages:build && wrangler@3 pages publish .vercel/output/static",
     "pages:watch": "npx @cloudflare/next-on-pages --watch",
-    "pages:dev": "npx wrangler pages dev .vercel/output/static --compatibility-flag=nodejs_compat"
+    "pages:dev": "npx wrangler@3 pages dev .vercel/output/static --compatibility-flag=nodejs_compat"
   },
   "dependencies": {
     "classnames": "^2.3.2",
@@ -52,6 +52,6 @@
     "tailwindcss": "3.3.2",
     "typescript": "5.0.4",
     "vercel": "^28.20.0",
-    "wrangler": "^3.0.0"
+    "wrangler": "^2.20.0"
   }
 }
