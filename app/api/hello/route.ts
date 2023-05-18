@@ -1,3 +1,10 @@
+import { KVNamespace } from '@cloudflare/workers-types';
+import { NextResponse } from 'next/server';
+
 export async function GET(request: Request) {
-  return new Response('Hello, Next.js!')
+  const { DOMAINS } = process.env as any as { DOMAINS: KVNamespace };
+  await DOMAINS?.put('test', 'value');
+
+  const data = await DOMAINS?.get('test');
+  return NextResponse.json({ data });
 }

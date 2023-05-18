@@ -12,7 +12,7 @@
     "pages:build": "npx @cloudflare/next-on-pages --experimental-minify",
     "pages:deploy": "npm run pages:build && wrangler@3 pages publish .vercel/output/static",
     "pages:watch": "npx @cloudflare/next-on-pages --watch",
-    "pages:dev": "npx wrangler@3 pages dev .vercel/output/static --compatibility-flag=nodejs_compat"
+    "pages:dev": "npm run pages:build && npx wrangler@3 pages dev .vercel/output/static --kv=DOMAINS --compatibility-flag=nodejs_compat"
   },
   "dependencies": {
     "classnames": "^2.3.2",
@@ -29,6 +29,7 @@
   },
   "devDependencies": {
     "@cloudflare/next-on-pages": "^1.0.0",
+    "@cloudflare/workers-types": "^4.20230511.0",
     "@formatjs/intl-localematcher": "^0.2.32",
     "@types/dlv": "^1.1.2",
     "@types/negotiator": "^0.6.1",
