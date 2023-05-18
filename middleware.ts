@@ -18,10 +18,11 @@ function getLocale(request: NextRequest): string {
 
 export function middleware(request: NextRequest) {
   let pathname = request.nextUrl.pathname;
-  if (pathname.endsWith('/') || pathname.includes('.')) {
-    // Remove trailing slash and dot
-    pathname = pathname.replace(/\/$/, '');
-  }
+  // if (pathname.endsWith('/') || pathname.includes('.')) {
+  //   // Remove trailing slash and dot
+  //   pathname = pathname.replace(/\/$/, '');
+  // }
+  pathname = pathname === '/' ? '' : pathname;
 
   // Check if there is any supported locale in the pathname
   const pathnameIsMissingLocale = i18n.locales.every(
