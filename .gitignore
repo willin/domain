@@ -29,6 +29,7 @@
 # vercel
 .vercel
 .wrangler
+demo/
 
 # typescript
 *.tsbuildinfo

@@ -1,13 +1,13 @@
-import { NextAuthOptions } from 'next-auth';
-import GithubProvider from 'next-auth/providers/github';
+import { AuthConfig } from '@auth/core';
+import GithubProvider from '@auth/core/providers/github';
 
-export const authOptions: NextAuthOptions = {
+export const authOptions: AuthConfig = {
   secret: process.env.GITHUB_SECRET,
   providers: [
     GithubProvider({
       clientId: process.env.GITHUB_ID || '',
       clientSecret: process.env.GITHUB_SECRET || ''
-    })
+    }) as any
   ],
   callbacks: {
     session: ({ session, token }) => {

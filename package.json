@@ -15,11 +15,12 @@
     "pages:dev": "npm run pages:build && npx wrangler@3 pages dev .vercel/output/static --kv=DOMAINS --compatibility-flag=nodejs_compat --compatibility-date=2023-05-12"
   },
   "dependencies": {
+    "@auth/core": "^0.7.1",
+    "@auth/nextjs": "^0.0.0-380f8d56",
     "classnames": "^2.3.2",
     "dayjs": "^1.11.7",
     "dlv": "^1.1.3",
     "next": "13.4.2",
-    "next-auth": "^4.22.1",
     "punycode": "^2.3.0",
     "react": "18.2.0",
     "react-dom": "18.2.0",
