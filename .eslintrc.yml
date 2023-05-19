@@ -11,6 +11,7 @@ parserOptions:
     - .mjs
 rules:
   no-unused-vars: 1
+  '@next/next/no-img-element': 0
   '@typescript-eslint/no-misused-promises': 0
   '@typescript-eslint/no-unsafe-assignment': 0
   'require-await': 0
