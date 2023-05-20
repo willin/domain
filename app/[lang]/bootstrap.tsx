@@ -3,6 +3,8 @@ import Script from 'next/script';
 import { useEffect } from 'react';
 import { usePathname } from 'next/navigation';
 
+const SCRIPT = 'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5059418763237956';
+
 export function Bootstrap() {
   const pathname = usePathname();
   useEffect(() => {
@@ -13,15 +15,24 @@ export function Bootstrap() {
     } catch (e) {
       //
     }
+    // window.addEventListener('load', () => {
+    //   // (A) TEST FETCH HEADER REQUEST TO GOOGLE ADSENSE
+    //   const test = new Request(
+    //     SCRIPT,
+    //     // "https://static.ads-twitter.com/uwt.js",
+    //     { method: 'HEAD', mode: 'no-cors' }
+    //   );
+
+    //   // (B) FIRE THE REQEST
+    //   fetch(test)
+    //     .then((res) => alert('ADS ALLOWED'))
+    //     .catch((err) => alert('ADBLOCK DETECTED'));
+    // });
   }, [pathname]);
 
   return (
     <>
-      <Script
-        async={true}
-        src='https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5059418763237956'
-        crossOrigin='anonymous'
-      />
+      <Script async={true} src={SCRIPT} crossOrigin='anonymous' />
     </>
   );
 }

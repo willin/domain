@@ -1,12 +1,12 @@
 import { NextResponse } from 'next/server';
-import { authOptions } from '@/lib/next-auth';
-import { Auth } from '@auth/core';
+// import { authOptions } from '@/lib/next-auth';
+// import { getServerSession } from '@auth/nextjs/next';
 
-export async function checkAuth(request: Request) {
-  // Session Check
-  const session = await Auth(request, authOptions);
-  if (!session) return NextResponse.json({ status: 0 }, { status: 401 });
-}
+// export async function checkAuth(request: Request) {
+//   // Session Check
+//   const session = await getServerSession(request, authOptions);
+//   if (!session) return NextResponse.json({ status: 0 }, { status: 401 });
+// }
 
 export function defaultHandler() {
   return NextResponse.json({ status: 404 }, { status: 404 });

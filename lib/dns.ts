@@ -35,8 +35,9 @@ export const editDomain = async (params: {
   content: string;
   type: string;
   proxied?: boolean;
+  username?: string;
 }): Promise<string> => {
-  const { id, zoneId, name, content, type, proxied = false } = params;
+  const { id, zoneId, name, content, type, username = '', proxied = false } = params;
 
   const res = await fetch(`${ApiEndpoint(zoneId)}${id ? `/${id}` : ''}`, {
     method: id ? 'PUT' : 'POST',
@@ -46,6 +47,7 @@ export const editDomain = async (params: {
     body: JSON.stringify({
       name: toASCII(name),
       content,
+      comment: username,
       type,
       proxied,
       ttl: 1
