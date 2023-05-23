@@ -2,12 +2,13 @@ import { NextAuthConfig } from '@auth/nextjs';
 import GithubProvider from '@auth/nextjs/providers/github';
 
 export const authOptions: NextAuthConfig = {
-  secret: process.env.GITHUB_SECRET,
+  secret: process.env.GITHUB_SECRET || '',
+  trustHost: true,
   providers: [
     GithubProvider({
       clientId: process.env.GITHUB_ID || '',
       clientSecret: process.env.GITHUB_SECRET || ''
-    })
+    }) as any
   ],
   callbacks: {
     session: ({ session, token }) => {

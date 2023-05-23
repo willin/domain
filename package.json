@@ -15,7 +15,7 @@
     "pages:dev": "npm run pages:build && npx wrangler@3 pages dev .vercel/output/static --kv=DOMAINS --compatibility-flag=nodejs_compat --compatibility-date=2023-05-12"
   },
   "dependencies": {
-    "@auth/nextjs": "^0.0.0-manual.d111c4dd",
+    "@auth/nextjs": "^0.0.0-manual.030e8328",
     "classnames": "^2.3.2",
     "dayjs": "^1.11.7",
     "dlv": "^1.1.3",
