@@ -1,3 +1,5 @@
 {
-  "hello": "Hello"
+  "common": {
+    "login": "Apply / Manage"
+  }
 }
