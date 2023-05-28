@@ -1,5 +1,8 @@
 {
   "common": {
-    "login": "Apply / Manage"
+    "login": "Apply / Manage",
+    "available": "Available Domains",
+    "views": "visits",
+    "rank": "Top Visits"
   }
 }

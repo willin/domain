@@ -1,16 +1,19 @@
 export const BaseURL = process.env.BASE_URL || 'https://domain.willin.wang';
 
-export const FreeDomains = process.env.FREE_DOMAINS
-  ? process.env.FREE_DOMAINS.split(',').map((s) => s.trim())
+const FreeDomainsConfig: [string, string][] = process.env.FREE_DOMAINS
+  ? JSON.parse(process.env.FREE_DOMAINS)
   : [
       //
-      'js.cool',
-      'sh.gg',
-      'log.lu',
-      'kaiyuan.fund',
-      'v0.chat',
-      '憨憨.我爱你'
+      ['js.cool', process.env.CF_ZONE_JS_COOL || ''],
+      ['sh.gg', process.env.CF_ZONE_SH_GG || ''],
+      ['log.lu', process.env.CF_ZONE_LOG_LU || ''],
+      ['kaiyuan.fund', process.env.CF_ZONE_KAIYUAN_FUND || ''],
+      ['v0.chat', process.env.CF_ZONE_V0_CHAT || ''],
+      ['憨憨.我爱你', process.env.CF_ZONE_HANHAN_WOAINI || '']
     ];
+
+export const FreeDomainsMapping = Object.fromEntries(FreeDomainsConfig);
+export const FreeDomains = FreeDomainsConfig.map(([domain]) => domain);
 
 export const CFAccountId = process.env.CF_ACCOUNT_ID || '';
 export const CFApiToken = process.env.CF_API_TOKEN || '';

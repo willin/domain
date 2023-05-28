@@ -1,5 +1,8 @@
 {
   "common": {
-    "login": "申请 / 管理"
+    "login": "申请 / 管理",
+    "available": "可注册域名后缀",
+    "views": "访问",
+    "rank": "访问排行"
   }
 }
