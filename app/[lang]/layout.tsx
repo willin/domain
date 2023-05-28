@@ -5,13 +5,12 @@ import { MainHeader } from './header';
 import { ContextParams } from './helper';
 import { Metadata } from 'next';
 import { BaseURL } from '@/lib/config';
-// import { BottomNav } from './bottom';
 import { Bootstrap } from './bootstrap';
 
 export const metadata: Metadata = {
   title: {
-    default: 'Willin Wang 长岛冰泪',
-    template: '%s | Willin Wang 长岛冰泪'
+    default: 'Willin Wang Free Domains',
+    template: '%s | Willin Domains'
   },
   description: '不走老路。 To be Willin is to be willing.',
   keywords: ['Next.js', 'React', 'JavaScript', 'Willin Wang'],
@@ -69,7 +68,6 @@ export default function RootLayout({ children, params }: { children: React.React
             </p>
           </footer>
         </div>
-        {/* <BottomNav lang={params.lang} /> */}
         <Bootstrap />
       </body>
     </html>

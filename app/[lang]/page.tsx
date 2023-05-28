@@ -6,7 +6,7 @@ import SignInBtn from './signin';
 
 export default async function Home({ params: { lang } }: { params: { lang: Locale } }) {
   const sites = await getSites();
-  const t = await translation(lang);
+  const t = translation(lang);
 
   return (
     <div className='flex justify-center flex-col'>
