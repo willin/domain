@@ -14,6 +14,7 @@ export const FreeDomains = process.env.FREE_DOMAINS
 
 export const CFAccountId = process.env.CF_ACCOUNT_ID || '';
 export const CFApiToken = process.env.CF_API_TOKEN || '';
+export const CFNamespaceId = process.env.CF_NAMESPACE_ID || '';
 export const CFSiteTags = (process.env.CF_SITE_TAGS || '').split(',').map((s) => s.trim());
 
 export const DNSType = ['A', 'AAAA', 'CNAME', 'NS', 'TXT'];

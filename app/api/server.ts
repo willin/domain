@@ -1,6 +1,6 @@
 import { NextResponse } from 'next/server';
 // import { authOptions } from '@/lib/next-auth';
-// import { getServerSession } from '@auth/nextjs/next';
+// import { getServerSession } from 'next-auth/next';
 
 // export async function checkAuth(request: Request) {
 //   // Session Check

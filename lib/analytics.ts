@@ -1,8 +1,8 @@
 import 'server-only';
 import { toASCII } from 'punycode';
-import { KVNamespace } from '@cloudflare/workers-types';
 import { CFAccountId, CFApiToken, CFSiteTags, FreeDomains } from './config';
 import { cache } from 'react';
+import kv from './kv';
 
 type queryResult = {
   viewer: {
@@ -39,9 +39,8 @@ const query = `query ($accountTag: string, $filter: AccountRumPageloadEventsAdap
 const regexp = new RegExp(`\\.(${FreeDomains.map((d) => toASCII(d).replace('.', '\\.')).join('|')})$`);
 
 export const getSites = cache(async () => {
-  const { DOMAINS: kv } = process.env as any as { DOMAINS: KVNamespace };
   // @ts-ignore
-  let json: [string, number][] = await kv?.get('$$sites', 'json');
+  let json: [string, number][] = await kv.get('$$sites', 'json');
   if (json) {
     return json;
   }
@@ -78,7 +77,7 @@ export const getSites = cache(async () => {
     }
   }
   json = Object.entries(sites).sort((a, b) => (a[1] - b[1] > 0 ? -1 : 1));
-  await kv?.put('$$sites', JSON.stringify(json), {
+  await kv.put('$$sites', json, {
     expirationTtl: 86400
   });
   return json;
