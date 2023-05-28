@@ -45,7 +45,7 @@ export default function RootLayout({ children, params }: { children: React.React
       <head />
       <body>
         <BackgroundImage />
-        <MainHeader />
+        <MainHeader lang={params.lang} />
         <div className='w-[640px] max-w-full mx-auto shadow bg-base-100/70 p-2 sm:p-4 mb-20'>
           {children}
           <footer className='text-center text-sm mt-4'>
