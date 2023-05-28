@@ -12,12 +12,13 @@ export const authOptions: NextAuthOptions = {
   callbacks: {
     session: ({ session, token }) => {
       if (session?.user) {
+        const username = token.username as string;
         Object.assign(session.user, {
           uid: token.uid,
-          username: token.username,
+          username,
           // TODO: TBD, async function available
-          vip: ['willin'].includes(token.username),
-          admin: ['willin'].includes(token.username)
+          vip: ['willin'].includes(username),
+          admin: ['willin'].includes(username)
         });
       }
       return session;

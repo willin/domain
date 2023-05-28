@@ -4,6 +4,7 @@ import { getServerSession } from 'next-auth/next';
 
 export async function checkAuth(request: Request) {
   // Session Check
+  // @ts-ignore
   const session = await getServerSession(request, authOptions);
   if (!session) return NextResponse.json({ status: 0 }, { status: 401 });
 }
