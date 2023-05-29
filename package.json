@@ -21,6 +21,7 @@
     "react-dom": "18.2.0",
     "remote-cloudflare-kv": "^0.0.1",
     "server-only": "^0.0.1",
+    "swr": "^2.1.5",
     "templite": "^1.2.0",
     "theme-change": "^2.5.0"
   },

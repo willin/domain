@@ -3,6 +3,8 @@
     "login": "Apply / Manage",
     "available": "Available Domains",
     "views": "visits",
-    "rank": "Top Visits"
+    "rank": "Top Visits",
+    "forbidden": "Forbidden",
+    "go_back": "Go Back"
   }
 }

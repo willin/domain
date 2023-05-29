@@ -1,4 +1,5 @@
 export const BaseURL = process.env.BASE_URL || 'https://domain.willin.wang';
+export const AdminId = process.env.ADMIN_ID || 'willin';
 
 const FreeDomainsConfig: [string, string][] = process.env.FREE_DOMAINS
   ? JSON.parse(process.env.FREE_DOMAINS)

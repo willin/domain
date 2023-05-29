@@ -1,5 +1,6 @@
 import { NextAuthOptions } from 'next-auth';
 import GithubProvider from 'next-auth/providers/github';
+import { AdminId } from './config';
 
 export const authOptions: NextAuthOptions = {
   secret: process.env.GITHUB_SECRET || '',
@@ -18,7 +19,7 @@ export const authOptions: NextAuthOptions = {
           username,
           // TODO: TBD, async function available
           vip: ['willin'].includes(username),
-          admin: ['willin'].includes(username)
+          admin: [AdminId].includes(username)
         });
       }
       return session;

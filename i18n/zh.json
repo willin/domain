@@ -3,6 +3,8 @@
     "login": "申请 / 管理",
     "available": "可注册域名后缀",
     "views": "访问",
-    "rank": "访问排行"
+    "rank": "访问排行",
+    "forbidden": "禁止访问",
+    "go_back": "返回"
   }
 }
