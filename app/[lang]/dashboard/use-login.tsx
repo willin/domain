@@ -1,7 +1,7 @@
 'use client';
 import type { Session } from 'next-auth';
 import useSWR from 'swr';
-import { AdminId } from '@/lib/config';
+import { AdminId, MAX_LIMIT_ADMIN, MAX_LIMIT_FOLLOWER, MAX_LIMIT_USER, MAX_LIMIT_VIP } from '@/lib/config';
 import { useEffect, useState } from 'react';
 
 export async function fetcher<JSON = any>(input: RequestInfo, init?: RequestInit): Promise<JSON> {
@@ -39,13 +39,13 @@ export function useLoginInfo() {
 
   useEffect(() => {
     if (admin) {
-      setMaxDomains(999);
+      setMaxDomains(MAX_LIMIT_ADMIN);
     } else if (vip) {
-      setMaxDomains(20);
+      setMaxDomains(MAX_LIMIT_VIP);
     } else if (following) {
-      setMaxDomains(5);
+      setMaxDomains(MAX_LIMIT_FOLLOWER);
     } else {
-      setMaxDomains(1);
+      setMaxDomains(MAX_LIMIT_USER);
     }
   }, [following, vip, admin]);
 

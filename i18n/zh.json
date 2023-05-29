@@ -1,5 +1,6 @@
 {
   "common": {
+    "total": "总计域名记录",
     "login": "申请 / 管理",
     "available": "可注册域名后缀",
     "views": "访问",

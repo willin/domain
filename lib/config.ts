@@ -1,7 +1,11 @@
 export const BaseURL = process.env.BASE_URL || 'https://domain.willin.wang';
 export const AdminId = process.env.ADMIN_ID || 'willin';
+export const MAX_LIMIT_ADMIN = Number(process.env.MAX_LIMIT_ADMIN) || 100;
+export const MAX_LIMIT_VIP = Number(process.env.MAX_LIMIT_VIP) || 20;
+export const MAX_LIMIT_FOLLOWER = Number(process.env.MAX_LIMIT_FOLLOWED) || 5;
+export const MAX_LIMIT_USER = Number(process.env.MAX_LIMIT_USER) || 1;
 
-const FreeDomainsConfig: [string, string][] = process.env.FREE_DOMAINS
+export const FreeDomainsConfig: [string, string][] = process.env.FREE_DOMAINS
   ? JSON.parse(process.env.FREE_DOMAINS)
   : [
       //
@@ -10,7 +14,9 @@ const FreeDomainsConfig: [string, string][] = process.env.FREE_DOMAINS
       ['log.lu', process.env.CF_ZONE_LOG_LU || ''],
       ['kaiyuan.fund', process.env.CF_ZONE_KAIYUAN_FUND || ''],
       ['v0.chat', process.env.CF_ZONE_V0_CHAT || ''],
-      ['憨憨.我爱你', process.env.CF_ZONE_HANHAN_WOAINI || '']
+      ['憨憨.我爱你', process.env.CF_ZONE_HANHAN_WOAINI || ''],
+      ['willin.love', process.env.CF_ZONE_WILLIN_LOVE || ''],
+      ['willin.vip', process.env.CF_ZONE_WILLIN_VIP || '']
     ];
 
 export const FreeDomainsMapping = Object.fromEntries(FreeDomainsConfig);
@@ -21,7 +27,9 @@ export const CFApiToken = process.env.CF_API_TOKEN || '';
 export const CFNamespaceId = process.env.CF_NAMESPACE_ID || '';
 export const CFSiteTags = (process.env.CF_SITE_TAGS || '').split(',').map((s) => s.trim());
 
-export const DNSType = ['A', 'AAAA', 'CNAME', 'NS', 'TXT'];
+// no proxy: TXT, MX
+// MX: priority: { type: 'number', min: 0, max: 65535 }
+export const DNSType = ['A', 'AAAA', 'CNAME', 'NS', 'TXT', 'MX'];
 
 export const BlockedList = [
   'about',

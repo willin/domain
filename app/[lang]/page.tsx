@@ -1,21 +1,26 @@
 import { Locale } from '@/i18n-config';
-import { getSites } from '@/lib/analytics';
+import { getSites, totalDomains } from '@/lib/analytics';
 import { toUnicode } from 'punycode';
 import { translation } from '@/lib/i18n';
 import SignInBtn from './signin';
 import { FreeDomains } from '@/lib/config';
 
 export default async function Home({ params: { lang } }: { params: { lang: Locale } }) {
-  const sites = await getSites();
+  const [sites, counter] = await Promise.all([getSites(), totalDomains()]);
   const t = translation(lang);
 
   return (
     <div className='flex justify-center flex-col'>
       <div>
         <h2 className='mt-4 text-2xl'>{t('common.available')}</h2>
+        <h3>
+          ({t('common.total')}: <span className='badge badge-xs'>{(counter.total || 0).toLocaleString()}</span>)
+        </h3>
         <ol className='list-disc list-inside my-4'>
           {FreeDomains.map((domain) => (
-            <li key={domain}>{domain}</li>
+            <li key={domain}>
+              {domain} <span className='badge badge-xs'>{(counter[domain] || 0).toLocaleString()}</span>
+            </li>
           ))}
         </ol>
       </div>

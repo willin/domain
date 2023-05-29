@@ -1,5 +1,6 @@
 {
   "common": {
+    "total": "Total Domains Registered",
     "login": "Apply / Manage",
     "available": "Available Domains",
     "views": "visits",

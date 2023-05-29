@@ -82,3 +82,8 @@ export const getSites = cache(async () => {
   });
   return json;
 });
+
+export const totalDomains = cache(async () => {
+  const result = await kv.get<Record<string, number>>('$$total', 'json');
+  return result || { total: 0 };
+});
