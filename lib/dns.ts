@@ -1,7 +1,7 @@
 import 'server-only';
 import { toASCII } from 'punycode';
 import { cache } from 'react';
-import { CFApiToken, BlockedList, FreeDomainsConfig } from './config';
+import { CFApiToken, BlockedList, FreeDomainsConfig, DNSType } from './config';
 import { totalDomains } from './analytics';
 import kv from './kv';
 
@@ -92,6 +92,9 @@ export const editDomain = async (params: {
   priority?: number;
 }): Promise<CFResult['result'] | null> => {
   const { id, zoneId, name, content, type, username = '', proxied = false, priority = 10 } = params;
+  if (!id && !DNSType.includes(type)) {
+    return null;
+  }
   const form: Record<string, unknown> = {
     name: toASCII(name),
     content,

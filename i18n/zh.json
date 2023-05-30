@@ -2,10 +2,20 @@
   "common": {
     "total": "总计域名记录",
     "login": "申请 / 管理",
+    "logout": "退出登录",
     "available": "可注册域名后缀",
     "views": "访问",
     "rank": "访问排行",
     "forbidden": "禁止访问",
-    "go_back": "返回"
+    "go_back": "返回",
+    "mine": "我的域名记录(可创建：{{available}})",
+    "create": "创建",
+    "edit": "编辑",
+    "delete": "删除"
+  },
+  "domain": {
+    "type": "类型",
+    "name": "域名",
+    "content": "记录"
   }
 }

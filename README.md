@@ -1,10 +1,25 @@
 # 免费域名申请/管理
 
-## Free Domains Application/Management
+## Free Domains Application / Management
 
-[![Fork](https://img.shields.io/github/contributors/willin/domain)](https://github.com/willin/domain/fork)
+[![GitHub Repo stars](https://img.shields.io/github/stars/willin/domain?style=social)](https://github.com/willin/domain) [![Fork](https://img.shields.io/github/contributors/willin/domain)](https://github.com/willin/domain/fork)
 
 <https://domain.willin.wang/>
+
+## 目前支持的域名 Domains Available
+
+- js.cool (support `Vercel`)
+- log.lu
+- sh.gg
+- kaiyuan.fund
+- v0.chat
+- 憨憨.我爱你
+- willin.vip
+- willin.love
+
+> 如果您有好的域名可以 Fork 本项目部署自己的域名申请服务，或者可以将域名转移给我用作于开源项目使用。
+>
+> If you have a good domain, you can fork this project to deploy your own domain application service, or you can transfer the domain to me for use in open source projects.
 
 ## 规则 Rules
 
@@ -30,6 +45,10 @@
 
 - 只有 `js.cool` 的二级域名支持绑定 Vercel
 - Only `js.cool` subdomains support Vercel binding
+
+## 参考资料 Refs
+
+- API: https://developers.cloudflare.com/api/operations/dns-records-for-a-zone-list-dns-records
 
 ## 赞助 Sponsor
 

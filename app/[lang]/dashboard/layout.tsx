@@ -15,14 +15,21 @@ export default async function AdminLayout({
   const t = translation(lang);
   const session = await getServerSession(authOptions);
   if (!session) {
-    return (
-      <Error lang={lang} goBack={t('common.go_back')} forbidden={t('common.forbidden')} login={t('common.login')} />
-    );
+    return <Error lang={lang} />;
   }
   return (
-    <>
-      {children}
-      <Logout />
-    </>
+    <main>
+      <div className='ads mx-auto text-center mb-4'>
+        <ins
+          className='adsbygoogle'
+          style={{ display: 'block' }}
+          data-ad-client='ca-pub-5059418763237956'
+          data-ad-slot='9518721243'
+          data-ad-format='auto'
+          data-full-width-responsive='true'></ins>
+      </div>
+      <article className='prose'>{children}</article>
+      <Logout label={t('common.logout')} />
+    </main>
   );
 }

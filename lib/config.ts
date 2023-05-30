@@ -14,9 +14,9 @@ export const FreeDomainsConfig: [string, string][] = process.env.FREE_DOMAINS
       ['log.lu', process.env.CF_ZONE_LOG_LU || ''],
       ['kaiyuan.fund', process.env.CF_ZONE_KAIYUAN_FUND || ''],
       ['v0.chat', process.env.CF_ZONE_V0_CHAT || ''],
-      ['憨憨.我爱你', process.env.CF_ZONE_HANHAN_WOAINI || ''],
-      ['willin.love', process.env.CF_ZONE_WILLIN_LOVE || ''],
-      ['willin.vip', process.env.CF_ZONE_WILLIN_VIP || '']
+      ['憨憨.我爱你', process.env.CF_ZONE_HANHAN_WOAINI || '']
+      // ,['willin.love', process.env.CF_ZONE_WILLIN_LOVE || '']
+      // ,['willin.vip', process.env.CF_ZONE_WILLIN_VIP || '']
     ];
 
 export const FreeDomainsMapping = Object.fromEntries(FreeDomainsConfig);
@@ -29,7 +29,9 @@ export const CFSiteTags = (process.env.CF_SITE_TAGS || '').split(',').map((s) =>
 
 // no proxy: TXT, MX
 // MX: priority: { type: 'number', min: 0, max: 65535 }
-export const DNSType = ['A', 'AAAA', 'CNAME', 'NS', 'TXT', 'MX'];
+export const DNSType: string[] = process.env.DNS_TYPE
+  ? JSON.parse(process.env.DNS_TYPE)
+  : ['A', 'AAAA', 'CNAME', 'NS', 'TXT', 'MX'];
 
 export const BlockedList = [
   'about',

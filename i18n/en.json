@@ -2,10 +2,20 @@
   "common": {
     "total": "Total Domains Registered",
     "login": "Apply / Manage",
+    "logout": "Logout",
     "available": "Available Domains",
     "views": "visits",
     "rank": "Top Visits",
     "forbidden": "Forbidden",
-    "go_back": "Go Back"
+    "go_back": "Go Back",
+    "mine": "My Domain Records ({{available}} remains)",
+    "create": "Create",
+    "edit": "Edit",
+    "delete": "Delete"
+  },
+  "domain": {
+    "type": "Type",
+    "name": "Name",
+    "content": "Content"
   }
 }
