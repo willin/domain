@@ -1,9 +1,10 @@
 'use client'; // Error components must be Client components
+import { Locale } from '@/i18n-config';
 import { translation } from '@/lib/i18n';
 import { signIn } from 'next-auth/react';
 import Link from 'next/link';
 
-export default function Error({ lang }: { [k: string]: string }) {
+export default function Error({ lang }: { lang: Locale; [k: string]: string }) {
   const t = translation(lang);
 
   return (

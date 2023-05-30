@@ -15,7 +15,7 @@ export function useLoginInfo() {
   const [maxDomains, setMaxDomains] = useState(1);
   const [following, setFollowing] = useState(false);
   const { data } = useSWR<Session['user']>('/api/me', fetcher);
-  const { username, vip = false, admin = false } = data || {};
+  const { username, vip = false, admin = false, records = [] } = data || {};
 
   useEffect(() => {
     if (username != undefined) {
@@ -52,6 +52,7 @@ export function useLoginInfo() {
   return {
     loading,
     username,
-    maxDomains
+    maxDomains,
+    records
   };
 }

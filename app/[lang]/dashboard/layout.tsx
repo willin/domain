@@ -1,9 +1,8 @@
-import { authOptions } from '@/lib/next-auth';
-import { getServerSession } from 'next-auth';
 import { translation } from '@/lib/i18n';
 import { Locale } from '@/i18n-config';
-import Error from './error';
 import { Logout } from './logout';
+import { MainContainer } from './container';
+import { GoBack } from './go-back';
 
 export default async function AdminLayout({
   params: { lang },
@@ -13,12 +12,9 @@ export default async function AdminLayout({
   children: React.ReactNode;
 }) {
   const t = translation(lang);
-  const session = await getServerSession(authOptions);
-  if (!session) {
-    return <Error lang={lang} />;
-  }
+
   return (
-    <main>
+    <MainContainer lang={lang}>
       <div className='ads mx-auto text-center mb-4'>
         <ins
           className='adsbygoogle'
@@ -29,7 +25,10 @@ export default async function AdminLayout({
           data-full-width-responsive='true'></ins>
       </div>
       <article className='prose'>{children}</article>
-      <Logout label={t('common.logout')} />
-    </main>
+      <div className='text-center py-4'>
+        <GoBack label={t('common.go_back')} />
+        <Logout label={t('common.logout')} />
+      </div>
+    </MainContainer>
   );
 }

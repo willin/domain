@@ -1,4 +1,5 @@
 import NextAuth, { DefaultSession } from 'next-auth';
+import { CFResult } from '@/lib/dns';
 
 declare module 'next-auth' {
   /**
@@ -11,6 +12,7 @@ declare module 'next-auth' {
       uid: number;
       vip: boolean;
       admin: boolean;
+      records?: CFResult['result'][];
     } & DefaultSession['user'];
   }
 }

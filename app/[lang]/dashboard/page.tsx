@@ -1,6 +1,7 @@
 import { Locale } from '@/i18n-config';
 import { translation } from '@/lib/i18n';
 import { CreateAndTitle } from './create';
+import { DomainList } from './table';
 
 export const revalidate = 60;
 
@@ -9,7 +10,7 @@ export default async function Page({ params: { lang } }: { params: { lang: Local
 
   return (
     <main>
-      <CreateAndTitle lang={lang} records={0} />
+      <CreateAndTitle lang={lang} />
       <section>
         <div className='overflow-x-auto w-full'>
           <table className='table table-zebra w-full min-w-full'>
@@ -23,9 +24,7 @@ export default async function Page({ params: { lang } }: { params: { lang: Local
               </tr>
             </thead>
             <tbody>
-              {/* {records.map((record) => (
-                <></>
-              ))} */}
+              <DomainList lang={lang} />
             </tbody>
           </table>
         </div>

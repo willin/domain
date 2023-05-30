@@ -5,10 +5,10 @@ import { Locale } from '@/i18n-config';
 import { translation } from '@/lib/i18n';
 import { useLoginInfo } from './use-login';
 
-export function CreateAndTitle({ lang, records }: { lang: Locale; records: number }) {
+export function CreateAndTitle({ lang }: { lang: Locale }) {
   const t = translation(lang);
-  const { loading, maxDomains } = useLoginInfo();
-  const remain = maxDomains - records || 0;
+  const { loading, maxDomains, records } = useLoginInfo();
+  const remain = maxDomains - records.length || 0;
   return (
     <>
       <nav className='flex justify-end'>
