@@ -152,6 +152,6 @@ export const deleteDomain = async (params: { id: string; zoneId: string; usernam
 };
 
 export const getUserRecords = cache(async (params: { username: string }) => {
-  const result = await kv.get<CFResult['result'][]>(params.username, 'json');
+  const result = await kv.get<CFResult['result'][]>(params.username, 'json').catch(() => []);
   return result || [];
 });

@@ -16,6 +16,8 @@
   "domain": {
     "type": "Type",
     "name": "Name",
-    "content": "Content"
+    "content": "Content",
+    "check": "Check",
+    "save": "Save"
   }
 }

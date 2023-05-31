@@ -16,6 +16,8 @@
   "domain": {
     "type": "类型",
     "name": "域名",
-    "content": "记录"
+    "content": "记录",
+    "check": "校验",
+    "save": "保存"
   }
 }

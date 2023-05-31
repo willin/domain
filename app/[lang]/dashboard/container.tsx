@@ -5,7 +5,7 @@ import { useLoginInfo } from './use-login';
 
 export function MainContainer({ lang, children }: { lang: Locale; children: React.ReactNode }) {
   const { loading, username } = useLoginInfo();
-  if (loading) return <main></main>;
+
   if (!loading && !username) {
     return <Error lang={lang} />;
   }
