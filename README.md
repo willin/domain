@@ -1,36 +1,69 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# 免费域名申请/管理
 
-## Getting Started
+## Free Domains Application / Management
 
-First, run the development server:
+[![GitHub Repo stars](https://img.shields.io/github/stars/willin/domain?style=social)](https://github.com/willin/domain) [![Fork](https://img.shields.io/github/contributors/willin/domain)](https://github.com/willin/domain/fork)
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-```
+<https://domain.willin.wang/>
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 目前支持的域名 Domains Available
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- js.cool (support `Vercel`)
+- log.lu
+- sh.gg
+- kaiyuan.fund
+- v0.chat
+- 憨憨.我爱你
+- willin.vip
+- willin.love
 
-[http://localhost:3000/api/hello](http://localhost:3000/api/hello) is an endpoint that uses [Route Handlers](https://beta.nextjs.org/docs/routing/route-handlers). This endpoint can be edited in `app/api/hello/route.ts`.
+> 如果您有好的域名可以 Fork 本项目部署自己的域名申请服务，或者可以将域名转移给我用作于开源项目使用。
+>
+> If you have a good domain, you can fork this project to deploy your own domain application service, or you can transfer the domain to me for use in open source projects.
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+## 规则 Rules
 
-## Learn More
+### 注册条件
 
-To learn more about Next.js, take a look at the following resources:
+- 为了避免滥用，无网站内容的申请将被拒绝
+- 为了避免域名冲突，请在申请前进行检查
+- 您的网站至少要提供中文语言版本（推荐中英双文）
+- 已经完成网站建设（提供介绍或截图）或已经发布开源项目（准备为开源项目搭建网站）
+- 不可在网站中出现政治敏感及暴力、色情等违法话题
+- 不定期进行域名检查，对无内容和非开源相关域名进行清理
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### Principe
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+- First of all, you need a site with content
+- Check whether the subdomain is available
+- Your site ~~must~~(will be nice to) have a Chinese translation edition
+- Already finish web site development, or supply an opensource project you want a site for
+- Illegal topics are forbbiden
+- Irregular spot check to delete subdomains which have no content or not related to opensource
 
-## Deploy on Vercel
+## 注意事项 Notice
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+- 只有 `js.cool` 的二级域名支持绑定 Vercel
+- Only `js.cool` subdomains support Vercel binding
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+## 参考资料 Refs
+
+- API: https://developers.cloudflare.com/api/operations/dns-records-for-a-zone-list-dns-records
+
+## 赞助 Sponsor
+
+如果您对本项目感兴趣，可以通过以下方式支持我：
+
+- 关注我的 Github 账号：[@willin](https://github.com/willin) [![github](https://img.shields.io/github/followers/willin.svg?style=social&label=Followers)](https://github.com/willin)
+- 参与 [爱发电](https://afdian.net/@willin) 计划
+- 支付宝或微信[扫码打赏](https://user-images.githubusercontent.com/1890238/89126156-0f3eeb80-d516-11ea-9046-5a3a5d59b86b.png)
+
+Donation ways:
+
+- Github: <https://github.com/sponsors/willin>
+- Paypal: <https://paypal.me/willinwang>
+- Alipay or Wechat Pay: [QRCode](https://user-images.githubusercontent.com/1890238/89126156-0f3eeb80-d516-11ea-9046-5a3a5d59b86b.png)
+
+## 许可证 License
+
+Apache-2.0

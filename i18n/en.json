@@ -1,0 +1,26 @@
+{
+  "common": {
+    "total": "Total Domains Registered",
+    "login": "Apply / Manage",
+    "logout": "Logout",
+    "available": "Available Domains",
+    "views": "visits",
+    "rank": "24h Top Visits",
+    "rank_notice": "Only CDN Proxy domains listed",
+    "forbidden": "Forbidden",
+    "go_back": "Go Back",
+    "mine": "My Domain Records ({{available}} remains)",
+    "create": "Create",
+    "edit": "Edit",
+    "delete": "Delete"
+  },
+  "domain": {
+    "type": "Type",
+    "name": "Name",
+    "content": "Content",
+    "check": "Check",
+    "save": "Save",
+    "confirm_delete": "Are you sure to delete this domain?",
+    "punycode_notice": "Note: Use Punycode domain name when adding domain binding"
+  }
+}

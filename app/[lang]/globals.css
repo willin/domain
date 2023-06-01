@@ -1,0 +1,65 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  * {
+    cursor: url('/images/default.cur'), default;
+  }
+
+  a,
+  a *,
+  button,
+  button *,
+  .btn,
+  .btn *,
+  .prose .post-image,
+  .cursor-pointer * {
+    cursor: url('/images/pointer.cur'), pointer;
+  }
+
+  html {
+    /* transition: background-color 0.5s linear, color 0.25s linear; */
+    min-height: 100vh;
+  }
+
+  div,
+  p {
+    @apply break-all;
+  }
+
+  pre {
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+  }
+
+  /* Remove Safari input shadow on mobile */
+  input[type='text'],
+  input[type='email'] {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+  }
+
+  table {
+    display: block;
+    max-width: fit-content;
+    overflow-x: auto;
+    white-space: nowrap;
+  }
+}
+
+@layer components {
+  #background {
+    @apply fixed inset-0 saturate-150 z-[-1];
+    background: url('/images/bg.jpg') no-repeat center center fixed;
+    background-size: cover;
+    transition: all 0.25s ease-in-out;
+    transform-style: preserve-3d;
+  }
+  #background.dark {
+    @apply brightness-50 saturate-100;
+    transform: rotate(-3deg) scale(1.2);
+    /* scaleX(-1); */
+  }
+}
