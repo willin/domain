@@ -12,7 +12,13 @@
     "mine": "My Domain Records ({{available}} remains)",
     "create": "Create",
     "edit": "Edit",
-    "delete": "Delete"
+    "delete": "Delete",
+    "limit_info": "Domain Count Limit Policy",
+    "follow": "⭐️ Go & Follow",
+    "donate": "⚡ Sponsor Willin",
+    "user": "User",
+    "follower": "Github Follower",
+    "vip": "Sponsor / VIP"
   },
   "domain": {
     "type": "Type",

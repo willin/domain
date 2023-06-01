@@ -44,7 +44,7 @@ export function Bootstrap() {
           const prompt = document.createElement('div');
           // @ts-ignore
           prompt.style =
-            'border: 1px solid #c6c6c6;border-radius: 4px;background-color: #f5f2f0;padding: 15px; margin:10px 0; font-size: 2rem;';
+            'border: 1px solid #c6c6c6;border-radius: 4px;background-color: #f5f2f0;padding: 15px; margin:10px 0; font-size: 1.25rem;';
           prompt.innerHTML =
             '<p>您使用了广告拦截器，导致本站内容无法显示。</p><p>请将 willin.wang 加入白名单，解除广告屏蔽后，刷新页面。谢谢。</p>';
           prompt.innerHTML +=

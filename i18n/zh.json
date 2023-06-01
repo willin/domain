@@ -12,7 +12,13 @@
     "mine": "我的域名记录(可创建：{{available}})",
     "create": "创建",
     "edit": "编辑",
-    "delete": "删除"
+    "delete": "删除",
+    "limit_info": "域名数量限制策略",
+    "follow": "⭐️ 去关注",
+    "donate": "⚡ 去充电",
+    "user": "登录用户",
+    "follower": "Github 关注粉丝",
+    "vip": "打赏月捐 VIP"
   },
   "domain": {
     "type": "类型",
