@@ -42,6 +42,7 @@ export default async function Home({ params: { lang } }: { params: { lang: Local
           </li>
         ))}
       </ol>
+      <h3 className='my-2 text-sm'>{t('common.rank_notice')}</h3>
     </div>
   );
 }
