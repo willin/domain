@@ -1,19 +1,30 @@
 'use client';
 import clsx from 'classnames';
-import { useEffect, useState, useRef } from 'react';
+import { useEffect, useState } from 'react';
 import { Locale } from '@/i18n-config';
 import { useLoginInfo } from '../use-login';
 import { translation } from '@/lib/i18n';
 import { toASCII } from 'punycode';
-import { checkDomainAction } from '../actions';
+import { checkDomainAction, createDomainAction } from '../actions';
 import { DNSType, FreeDomains } from '@/lib/config';
+import { getPlaceHolder, validateContent } from '../../helper';
+import { DomainNotice } from './notice';
+import { useRouter } from 'next/navigation';
+import { useSWRConfig } from 'swr';
+import { CFResult } from '@/lib/dns';
 
 export function CreateForm({ lang }: { lang: Locale }) {
+  const { mutate } = useSWRConfig();
+  const router = useRouter();
   const t = translation(lang);
-  const formRef = useRef<HTMLFormElement>(null);
-  const { loading, maxDomains, records } = useLoginInfo();
+  const { loading, maxDomains, records, username } = useLoginInfo();
   const [name, setName] = useState('');
+  const [zoneName, setZoneName] = useState(FreeDomains[0]);
+  const [proxied, setProxied] = useState(true);
+  const [type, setType] = useState('CNAME');
+  const [content, setContent] = useState('');
   const [valid, setValid] = useState(false);
+  const [validContent, setValidContent] = useState(false);
   const [checked, setChecked] = useState(false);
   const [pending, setPending] = useState(false);
 
@@ -27,26 +38,34 @@ export function CreateForm({ lang }: { lang: Locale }) {
   }
 
   async function submit() {
-    console.log('submit');
+    setPending(true);
+    await createDomainAction({
+      name,
+      zone_name: zoneName,
+      content,
+      type,
+      proxied,
+      username
+    } as CFResult['result'])
+      .then(async () => {
+        await mutate('/api/me');
+        void router.push(`/${lang}/dashboard`);
+      })
+      .catch(() => {});
+
+    setPending(false);
   }
 
   async function check() {
     setPending(true);
-    const exists = records.find((i) => toASCII(name) === i.name);
+    const exists = records.find((i) => `${toASCII(name)}.${zoneName}` === i.name);
     if (exists) {
       setValid(true);
     } else {
-      const body = formRef.current as HTMLFormElement & {
-        name: { value: string };
-        zone_name: { value: string };
-        type: { value: keyof typeof FreeDomains };
-        content: { value: string };
-        proxied: { checked: boolean };
-      };
       const result = await checkDomainAction({
         name,
-        zone_name: body.zone_name.value
-      });
+        zone_name: zoneName
+      } as CFResult['result']).catch(() => false);
       setValid(result);
     }
     setChecked(true);
@@ -54,14 +73,14 @@ export function CreateForm({ lang }: { lang: Locale }) {
   }
 
   return (
-    <form action={submit as any} ref={formRef}>
+    <form action={submit as any}>
       <div className='form-control my-4'>
         <div className='input-group'>
           <input
             type='text'
             placeholder={t('domain.name')}
             name='name'
-            defaultValue={name}
+            value={name}
             className={clsx('w-full input input-bordered', {
               'input-error': checked && !valid,
               'input-secondary': !checked || valid
@@ -70,6 +89,8 @@ export function CreateForm({ lang }: { lang: Locale }) {
           />
           <select
             name='zone_name'
+            value={zoneName}
+            onChange={(e) => setZoneName(e.target.value)}
             className={clsx('select select-bordered', {
               'select-error': checked && !valid,
               'select-secondary': !checked || valid
@@ -98,7 +119,9 @@ export function CreateForm({ lang }: { lang: Locale }) {
         <div className='input-group'>
           <select
             disabled={!valid}
-            className={clsx('select select-bordered', {
+            value={type}
+            onChange={(e) => setType(e.target.value.trim())}
+            className={clsx('select select-bordered select-secondary', {
               'select-disabled': !valid
             })}>
             {DNSType.map((t) => (
@@ -109,9 +132,14 @@ export function CreateForm({ lang }: { lang: Locale }) {
           </select>
           <input
             type='text'
-            placeholder={t('domain.content')}
+            placeholder={getPlaceHolder(type) || t('domain.content')}
             name='content'
-            className={clsx('w-full input input-bordered', {
+            value={content}
+            onChange={(e) => {
+              setContent(e.target.value.trim());
+              setValidContent(validateContent(type, e.target.value.trim()));
+            }}
+            className={clsx('w-full input input-bordered input-secondary', {
               'input-disabled': !valid
             })}
             disabled={!valid}
@@ -125,11 +153,12 @@ export function CreateForm({ lang }: { lang: Locale }) {
           <input
             type='checkbox'
             name='proxied'
+            checked={proxied}
+            onChange={setProxied.bind(null, !proxied)}
             className={clsx('toggle toggle-secondary', {
               'input-disabled': !valid
             })}
             disabled={!valid}
-            defaultChecked
           />
         </label>
       </div>
@@ -139,12 +168,14 @@ export function CreateForm({ lang }: { lang: Locale }) {
           type='submit'
           disabled={!valid}
           className={clsx('btn', {
-            'btn-disabled': pending,
+            'btn-disabled': pending || !validContent,
             'btn-secondary': valid
           })}>
           {t('domain.save')}
         </button>
       </div>
+
+      <DomainNotice lang={lang} name={name} domain={zoneName} />
     </form>
   );
 }

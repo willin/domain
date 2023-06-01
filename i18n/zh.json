@@ -18,6 +18,8 @@
     "name": "域名",
     "content": "记录",
     "check": "校验",
-    "save": "保存"
+    "save": "保存",
+    "confirm_delete": "确认要删除该域名吗？",
+    "punycode_notice": "注意： 添加域名绑定时使用 Punycode 域名"
   }
 }

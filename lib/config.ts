@@ -31,7 +31,7 @@ export const CFSiteTags = (process.env.CF_SITE_TAGS || '').split(',').map((s) =>
 // MX: priority: { type: 'number', min: 0, max: 65535 }
 export const DNSType: string[] = process.env.DNS_TYPE
   ? JSON.parse(process.env.DNS_TYPE)
-  : ['A', 'AAAA', 'CNAME', 'NS', 'TXT', 'MX'];
+  : ['A', 'AAAA', 'CNAME', 'NS', 'TXT'];
 
 export const BlockedList = [
   'about',

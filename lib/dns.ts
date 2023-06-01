@@ -18,6 +18,8 @@ export type CFResult = {
     ttl: number;
     proxied: boolean;
     priority: number;
+    // custom
+    username?: string;
   };
 };
 
@@ -28,9 +30,9 @@ export const domainCounter = async (params: { zoneId: string; count?: number }) 
   const [domain] = FreeDomainsConfig.find(([, zid]) => zid === zoneId) || [];
   const result = await totalDomains();
   if (domain) {
-    result[domain] = count + result[domain] ?? 0;
+    result[domain] = count + (result[domain] || 0);
+    result.total += count;
   }
-  result.total += count;
   await kv.put('$$total', JSON.stringify(result));
 };
 
@@ -43,15 +45,16 @@ export const domainRecord = async (params: {
   const data: CFResult['result'][] = (await kv.get(username, 'json')) || [];
   switch (type) {
     case 'DELETE': {
-      const index = ~data.findIndex((r) => r.id === record.id);
-      if (index) {
+      const index = data.findIndex((r) => r.id === record.id);
+      if (index !== -1) {
         data.splice(index, 1);
       }
       break;
     }
     case 'EDIT': {
-      const index = ~data.findIndex((r) => r.id === record.id);
-      if (index) {
+      const index = data.findIndex((r) => r.id === record.id);
+
+      if (index !== -1) {
         data[index] = record;
       }
       break;
@@ -68,7 +71,7 @@ export const checkDomain = cache(
   async (params: { zoneId: string; name: string; domain: string; isAdmin?: boolean }) => {
     const { zoneId, domain, name, isAdmin = false } = params;
     if (!isAdmin && BlockedList.includes(name)) return false;
-    if (name.includes('.') || ['@', '*'].includes(name)) return false;
+    if (name.includes('.') || ['@', '*', '.'].includes(name)) return false;
     const response = await fetch(`${ApiEndpoint(zoneId)}?name=${toASCII(`${name}.${domain}`)}`, {
       headers: {
         Authorization: `Bearer ${CFApiToken}`
@@ -140,7 +143,7 @@ export const deleteDomain = async (params: { id: string; zoneId: string; usernam
     }
   });
   const data = (await res.json()) as CFResult;
-  const success = !!data.result.id;
+  const success = !!data.result?.id;
   if (success) {
     //   // count -1
     //   await domainCounter({ zoneId, count: -1 });

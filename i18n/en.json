@@ -18,6 +18,8 @@
     "name": "Name",
     "content": "Content",
     "check": "Check",
-    "save": "Save"
+    "save": "Save",
+    "confirm_delete": "Are you sure to delete this domain?",
+    "punycode_notice": "Note: Use Punycode domain name when adding domain binding"
   }
 }

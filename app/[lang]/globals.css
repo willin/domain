@@ -4,7 +4,6 @@
 
 @layer base {
   * {
-    user-select: none;
     cursor: url('/images/default.cur'), default;
   }
 
@@ -22,19 +21,16 @@
   html {
     /* transition: background-color 0.5s linear, color 0.25s linear; */
     min-height: 100vh;
-    user-select: none;
   }
 
   div,
   p {
     @apply break-all;
-    user-select: none;
   }
 
   pre {
     -ms-overflow-style: none; /* IE and Edge */
     scrollbar-width: none; /* Firefox */
-    user-select: none;
   }
 
   /* Remove Safari input shadow on mobile */
