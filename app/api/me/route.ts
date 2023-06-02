@@ -5,7 +5,7 @@ import { getUserRecords } from '@/lib/dns';
 
 export async function GET() {
   const session = await getServerSession(authOptions);
-  if (!session) return NextResponse.json({ username: '' });
+  if (!session || !session.user) return NextResponse.json({ username: '' });
   const records = await getUserRecords({ username: session?.user.username });
   return NextResponse.json({ ...session?.user, records });
 }

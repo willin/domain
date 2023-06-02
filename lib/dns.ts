@@ -1,6 +1,5 @@
 import 'server-only';
 import { toASCII } from 'punycode';
-import { cache } from 'react';
 import { CFApiToken, BlockedList, FreeDomainsConfig, DNSType } from './config';
 import { totalDomains } from './analytics';
 import kv from './kv';
@@ -67,22 +66,20 @@ export const domainRecord = async (params: {
   await kv.put(username, JSON.stringify(data));
 };
 
-export const checkDomain = cache(
-  async (params: { zoneId: string; name: string; domain: string; isAdmin?: boolean }) => {
-    const { zoneId, domain, name, isAdmin = false } = params;
-    if (!isAdmin && BlockedList.includes(name)) return false;
-    if (name.includes('.') || ['@', '*', '.'].includes(name)) return false;
-    const response = await fetch(`${ApiEndpoint(zoneId)}?name=${toASCII(`${name}.${domain}`)}`, {
-      headers: {
-        Authorization: `Bearer ${CFApiToken}`
-      }
-    });
+export const checkDomain = async (params: { zoneId: string; name: string; domain: string; isAdmin?: boolean }) => {
+  const { zoneId, domain, name, isAdmin = false } = params;
+  if (!isAdmin && BlockedList.includes(name)) return false;
+  if (name.includes('.') || ['@', '*', '.'].includes(name)) return false;
+  const response = await fetch(`${ApiEndpoint(zoneId)}?name=${toASCII(`${name}.${domain}`)}`, {
+    headers: {
+      Authorization: `Bearer ${CFApiToken}`
+    }
+  });
 
-    const { result }: { result: { id: string }[] } = await response.json();
+  const { result }: { result: { id: string }[] } = await response.json();
 
-    return result?.length === 0;
-  }
-);
+  return result?.length === 0;
+};
 
 export const editDomain = async (params: {
   id?: string;

@@ -17,7 +17,7 @@ export function CreateForm({ lang }: { lang: Locale }) {
   const { mutate } = useSWRConfig();
   const router = useRouter();
   const t = translation(lang);
-  const { loading, maxDomains, records, username } = useLoginInfo();
+  const { loading, maxDomains, username } = useLoginInfo();
   const [name, setName] = useState('');
   const [zoneName, setZoneName] = useState(FreeDomains[0]);
   const [proxied, setProxied] = useState(true);
@@ -27,7 +27,15 @@ export function CreateForm({ lang }: { lang: Locale }) {
   const [validContent, setValidContent] = useState(false);
   const [checked, setChecked] = useState(false);
   const [pending, setPending] = useState(false);
+  const [records, setRecords] = useState<CFResult['result'][]>([]);
 
+  useEffect(() => {
+    void fetch('/api/me', { next: { revalidate: 0 } })
+      .then((res) => res.json())
+      .then(({ records }: { records: CFResult['result'][] }) => {
+        setRecords(records);
+      });
+  }, []);
   useEffect(() => {
     setValid(false);
   }, [name]);
@@ -52,7 +60,6 @@ export function CreateForm({ lang }: { lang: Locale }) {
         void router.push(`/${lang}/dashboard`);
       })
       .catch(() => {});
-
     setPending(false);
   }
 
@@ -167,6 +174,7 @@ export function CreateForm({ lang }: { lang: Locale }) {
         <button
           type='submit'
           disabled={!valid}
+          onClick={() => setPending(true)}
           className={clsx('btn', {
             'btn-disabled': pending || !validContent,
             'btn-secondary': valid
