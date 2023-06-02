@@ -42,7 +42,7 @@ export const domainRecord = async (params: {
   record: CFResult['result'];
 }) => {
   const { username, type, record } = params;
-  const data = await getUserRecords(username);
+  const data = await getUserRecords({ username });
   switch (type) {
     case 'DELETE': {
       const index = data.findIndex((r) => r.id === record.id);
