@@ -1,6 +1,5 @@
 import 'server-only';
 import { toASCII } from 'punycode';
-import { cache } from 'react';
 import { CFApiToken, BlockedList, FreeDomainsConfig, DNSType } from './config';
 import { totalDomains } from './analytics';
 import kv from './kv';
@@ -42,7 +41,7 @@ export const domainRecord = async (params: {
   record: CFResult['result'];
 }) => {
   const { username, type, record } = params;
-  const data: CFResult['result'][] = (await kv.get(username, 'json')) || [];
+  const data = await getUserRecords({ username });
   switch (type) {
     case 'DELETE': {
       const index = data.findIndex((r) => r.id === record.id);
@@ -67,22 +66,20 @@ export const domainRecord = async (params: {
   await kv.put(username, JSON.stringify(data));
 };
 
-export const checkDomain = cache(
-  async (params: { zoneId: string; name: string; domain: string; isAdmin?: boolean }) => {
-    const { zoneId, domain, name, isAdmin = false } = params;
-    if (!isAdmin && BlockedList.includes(name)) return false;
-    if (name.includes('.') || ['@', '*', '.'].includes(name)) return false;
-    const response = await fetch(`${ApiEndpoint(zoneId)}?name=${toASCII(`${name}.${domain}`)}`, {
-      headers: {
-        Authorization: `Bearer ${CFApiToken}`
-      }
-    });
+export const checkDomain = async (params: { zoneId: string; name: string; domain: string; isAdmin?: boolean }) => {
+  const { zoneId, domain, name, isAdmin = false } = params;
+  if (!isAdmin && BlockedList.includes(name)) return false;
+  if (name.includes('.') || ['@', '*', '.'].includes(name)) return false;
+  const response = await fetch(`${ApiEndpoint(zoneId)}?name=${toASCII(`${name}.${domain}`)}`, {
+    headers: {
+      Authorization: `Bearer ${CFApiToken}`
+    }
+  });
 
-    const { result }: { result: { id: string }[] } = await response.json();
+  const { result }: { result: { id: string }[] } = await response.json();
 
-    return result?.length === 0;
-  }
-);
+  return result?.length === 0;
+};
 
 export const editDomain = async (params: {
   id?: string;
@@ -136,13 +133,14 @@ export const editDomain = async (params: {
 
 export const deleteDomain = async (params: { id: string; zoneId: string; username?: string }): Promise<boolean> => {
   const { id, zoneId, username = '' } = params;
-  const res = await fetch(`${ApiEndpoint(zoneId)}/${id}`, {
+  const data: CFResult = await fetch(`${ApiEndpoint(zoneId)}/${id}`, {
     method: 'DELETE',
     headers: {
       Authorization: `Bearer ${CFApiToken}`
     }
-  });
-  const data = (await res.json()) as CFResult;
+  })
+    .then((res) => res.json())
+    .catch(() => ({}));
   const success = !!data.result?.id;
   if (success) {
     //   // count -1
@@ -154,7 +152,7 @@ export const deleteDomain = async (params: { id: string; zoneId: string; usernam
   return success;
 };
 
-export const getUserRecords = cache(async (params: { username: string }) => {
-  const result = await kv.get<CFResult['result'][]>(params.username, 'json').catch(() => []);
+export const getUserRecords = async (params: { username: string }) => {
+  const result = await kv.get<CFResult['result'][]>(params.username, 'json');
   return result || [];
-});
+};

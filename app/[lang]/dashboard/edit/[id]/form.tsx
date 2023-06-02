@@ -17,21 +17,27 @@ export function UpdateForm({ lang }: { lang: Locale }) {
   const router = useRouter();
   const params = useParams();
   const t = translation(lang);
-  const { username, records } = useLoginInfo();
-  const record = records.find((x) => x.id === params.id);
-
+  const { username } = useLoginInfo();
+  const [record, setRecord] = useState<CFResult['result'] | null>(null);
   const [proxied, setProxied] = useState(true);
   const [type, setType] = useState('CNAME');
   const [content, setContent] = useState('');
   const [validContent, setValidContent] = useState(false);
   const [pending, setPending] = useState(false);
+
   useEffect(() => {
-    if (record) {
-      setProxied(record.proxied ?? true);
-      setType(record.type ?? 'CNAME');
-      setContent(record?.content ?? '');
-    }
-  }, [record]);
+    void fetch('/api/me', { next: { revalidate: 0 } })
+      .then((res) => res.json())
+      .then(({ records }: { records: CFResult['result'][] }) => {
+        const record = records.find((x) => x.id === params.id);
+        if (record) {
+          setRecord(record);
+          setProxied(record.proxied ?? true);
+          setType(record.type ?? 'CNAME');
+          setContent(record?.content ?? '');
+        }
+      });
+  }, []);
 
   if (!record || !record.comment || record.comment !== username) {
     return <></>;
@@ -132,6 +138,7 @@ export function UpdateForm({ lang }: { lang: Locale }) {
         <button
           type='submit'
           disabled={pending}
+          onClick={() => setPending(true)}
           className={clsx('btn btn-secondary', {
             'btn-disabled': pending || !validContent
           })}>
