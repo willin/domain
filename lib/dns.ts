@@ -136,13 +136,14 @@ export const editDomain = async (params: {
 
 export const deleteDomain = async (params: { id: string; zoneId: string; username?: string }): Promise<boolean> => {
   const { id, zoneId, username = '' } = params;
-  const res = await fetch(`${ApiEndpoint(zoneId)}/${id}`, {
+  const data: CFResult = await fetch(`${ApiEndpoint(zoneId)}/${id}`, {
     method: 'DELETE',
     headers: {
       Authorization: `Bearer ${CFApiToken}`
     }
-  });
-  const data = (await res.json()) as CFResult;
+  })
+    .then((res) => res.json())
+    .catch(() => ({}));
   const success = !!data.result?.id;
   if (success) {
     //   // count -1
