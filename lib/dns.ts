@@ -42,7 +42,7 @@ export const domainRecord = async (params: {
   record: CFResult['result'];
 }) => {
   const { username, type, record } = params;
-  const data: CFResult['result'][] = (await kv.get(username, 'json')) || [];
+  const data = await getUserRecords(username);
   switch (type) {
     case 'DELETE': {
       const index = data.findIndex((r) => r.id === record.id);
@@ -155,7 +155,7 @@ export const deleteDomain = async (params: { id: string; zoneId: string; usernam
   return success;
 };
 
-export const getUserRecords = cache(async (params: { username: string }) => {
-  const result = await kv.get<CFResult['result'][]>(params.username, 'json').catch(() => []);
+export const getUserRecords = async (params: { username: string }) => {
+  const result = await kv.get<CFResult['result'][]>(params.username, 'json');
   return result || [];
-});
+};
