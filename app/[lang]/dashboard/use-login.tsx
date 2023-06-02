@@ -14,7 +14,9 @@ export function useLoginInfo() {
   const [loading, setLoading] = useState(true);
   const [maxDomains, setMaxDomains] = useState(1);
   const [following, setFollowing] = useState(false);
-  const { data } = useSWR<Session['user']>('/api/me', fetcher);
+  const { data } = useSWR<Session['user']>('/api/me', fetcher, {
+    revalidateIfStale: true
+  });
   const { username, vip = false, admin = false, records = [] } = data || {};
 
   useEffect(() => {
