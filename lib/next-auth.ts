@@ -1,6 +1,6 @@
 import { NextAuthOptions } from 'next-auth';
 import GithubProvider from 'next-auth/providers/github';
-import { AdminId, BlockedList } from './config';
+import { AdminId, BlockedUsers } from './config';
 
 export const authOptions: NextAuthOptions = {
   secret: process.env.GITHUB_SECRET || '',
@@ -14,7 +14,7 @@ export const authOptions: NextAuthOptions = {
     session: ({ session, token }) => {
       if (session?.user) {
         const username = token.username as string;
-        const blocked = BlockedList.includes(username);
+        const blocked = BlockedUsers.includes(username);
         Object.assign(session.user, {
           uid: token.uid,
           username: blocked ? '' : username,
