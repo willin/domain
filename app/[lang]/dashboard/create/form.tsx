@@ -187,7 +187,7 @@ export function CreateForm({ lang }: { lang: Locale }) {
             className={clsx('checkbox', {
               'input-disabled': !valid
             })}
-            value={agree}
+            checked={agree}
             onChange={setAgree.bind(null, !agree)}
           />
         </label>
