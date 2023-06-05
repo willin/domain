@@ -41,11 +41,6 @@
 - Illegal topics and politically sensitive contents are forbbiden
 - Irregular spot check to delete subdomains which have no content or not related to opensource
 
-## 注意事项 Notice
-
-- 只有 `js.cool` 的二级域名支持绑定 Vercel
-- Only `js.cool` subdomains support Vercel binding
-
 ## 参考资料 Refs
 
 - API: https://developers.cloudflare.com/api/operations/dns-records-for-a-zone-list-dns-records

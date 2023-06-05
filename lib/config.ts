@@ -109,3 +109,8 @@ export const BlockedList = [
   'ww',
   'www'
 ];
+
+export const BlockedList = [
+  // Blocked users
+  'Lee-Flier'
+];
