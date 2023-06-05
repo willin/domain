@@ -27,6 +27,7 @@ export function CreateForm({ lang }: { lang: Locale }) {
   const [validContent, setValidContent] = useState(false);
   const [checked, setChecked] = useState(false);
   const [pending, setPending] = useState(false);
+  const [agree, setAgree] = useState(false);
   const [records, setRecords] = useState<CFResult['result'][]>([]);
 
   useEffect(() => {
@@ -171,12 +172,34 @@ export function CreateForm({ lang }: { lang: Locale }) {
       </div>
 
       <div className='form-control my-2'>
+        <label className='label cursor-pointer'>
+          <span className='label-text'>
+            {t('domain.agree')}:
+            <a
+              className='text-primary'
+              href='https://github.com/willin/domain#%E8%A7%84%E5%88%99-rules'
+              target='_blank'>
+              {t('domain.rules')}
+            </a>
+          </span>
+          <input
+            type='checkbox'
+            className={clsx('checkbox', {
+              'input-disabled': !valid
+            })}
+            checked={agree}
+            onChange={setAgree.bind(null, !agree)}
+          />
+        </label>
+      </div>
+
+      <div className='form-control my-2'>
         <button
           type='submit'
           disabled={!valid}
           onClick={() => setPending(true)}
           className={clsx('btn', {
-            'btn-disabled': pending || !validContent,
+            'btn-disabled': pending || !validContent || !agree,
             'btn-secondary': valid
           })}>
           {t('domain.save')}

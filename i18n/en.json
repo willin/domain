@@ -27,6 +27,8 @@
     "check": "Check",
     "save": "Save",
     "confirm_delete": "Are you sure to delete this domain?",
-    "punycode_notice": "Note: Use Punycode domain name when adding domain binding"
+    "punycode_notice": "Note: Use Punycode domain name when adding domain binding",
+    "agree": "I have read and agree to the ",
+    "rules": "Domain Registration Rules"
   }
 }

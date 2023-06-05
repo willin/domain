@@ -27,6 +27,8 @@
     "check": "校验",
     "save": "保存",
     "confirm_delete": "确认要删除该域名吗？",
-    "punycode_notice": "注意： 添加域名绑定时使用 Punycode 域名"
+    "punycode_notice": "注意： 添加域名绑定时使用 Punycode 域名",
+    "agree": "我已阅读并承诺遵守",
+    "rules": "《域名注册规则》"
   }
 }

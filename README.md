@@ -30,7 +30,10 @@
 - 您的网站至少要提供中文语言版本（推荐中英双文）
 - 已经完成网站建设（提供介绍或截图）或已经发布开源项目（准备为开源项目搭建网站）
 - 不可在网站中出现政治敏感及暴力、色情、VPN、反向代理服务等违法或敏感内容
-- 不定期进行域名检查，对无内容和非开源相关域名进行清理
+
+(不定期进行域名检查，对违反以上规则、无内容和非开源相关域名进行清理)
+
+> 特别提示：如果您的网站内容不符合中国大陆法律法规，您的域名将会被删除，且不会提供备份。
 
 ### Principe
 
@@ -39,12 +42,10 @@
 - Your site ~~must~~(will be nice to) have a Chinese translation edition
 - Already finish web site development, or supply an opensource project you want a site for
 - Illegal topics and politically sensitive contents are forbbiden
-- Irregular spot check to delete subdomains which have no content or not related to opensource
 
-## 注意事项 Notice
+(Conduct domain name inspections from time to time, and clean up domain names that violate the above rules, have no content, and are non-open source related domain names)
 
-- 只有 `js.cool` 的二级域名支持绑定 Vercel
-- Only `js.cool` subdomains support Vercel binding
+> Special reminder: If the content of your website does not comply with Chinese laws and regulations, your domain name will be deleted and no backup will be provided.
 
 ## 参考资料 Refs
 

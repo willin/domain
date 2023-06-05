@@ -109,3 +109,8 @@ export const BlockedList = [
   'ww',
   'www'
 ];
+
+export const BlockedUsers = [
+  // Blocked users
+  'Lee-Flier' // Provide Proxy Service for China Mainland Users
+];
