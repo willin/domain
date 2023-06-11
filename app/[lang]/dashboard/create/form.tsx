@@ -146,6 +146,9 @@ export function CreateForm({ lang }: { lang: Locale }) {
             onChange={(e) => {
               setContent(e.target.value.trim());
               setValidContent(validateContent(type, e.target.value.trim()));
+              if (valid && content.includes('vercel-dns.com')) {
+                setProxied(false);
+              }
             }}
             className={clsx('w-full input input-bordered input-secondary', {
               'input-disabled': !valid
