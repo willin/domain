@@ -8,7 +8,7 @@
 
 ## 目前支持的域名 Domains Available
 
-- js.cool (support `Vercel`)
+- js.cool
 - log.lu
 - sh.gg
 - kaiyuan.fund
@@ -29,7 +29,7 @@
 - 为了避免域名冲突，请在申请前进行检查
 - 您的网站至少要提供中文语言版本（推荐中英双文）
 - 已经完成网站建设（提供介绍或截图）或已经发布开源项目（准备为开源项目搭建网站）
-- 不可在网站中出现政治敏感及暴力、色情、VPN、反向代理服务等违法或敏感内容
+- 不可在网站中出现政治敏感及暴力、色情、链接跳转、VPN、反向代理服务等违法或敏感内容
 
 (不定期进行域名检查，对违反以上规则、无内容和非开源相关域名进行清理)
 
@@ -41,7 +41,7 @@
 - Check whether the subdomain is available
 - Your site ~~must~~(will be nice to) have a Chinese translation edition
 - Already finish web site development, or supply an opensource project you want a site for
-- Illegal topics and politically sensitive contents are forbbiden
+- Illegal topics and politically sensitive contents are forbbiden (Short-link service, VPN, proxy, etc.)
 
 (Conduct domain name inspections from time to time, and clean up domain names that violate the above rules, have no content, and are non-open source related domain names)
 
