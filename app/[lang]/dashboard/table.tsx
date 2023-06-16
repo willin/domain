@@ -14,13 +14,19 @@ export function DomainList({ lang }: { lang: Locale }) {
       {records.map((record) => (
         <tr key={record.id}>
           <td>{record.type}</td>
-          <td>{toUnicode(record.name)}</td>
-          <td>{record.content}</td>
           <td>
-            <Link className='link link-primary' href={`/${lang}/dashboard/edit/${record.id}`}>
-              {t('common.edit')}
-            </Link>
+            {record.name.includes('.') ? toUnicode(record.name) : toUnicode(`${record.name}.${record.zone_name}`)}
           </td>
+          <td>{record.content}</td>
+          {record.pending ? (
+            <td>{t('domain.pending')}</td>
+          ) : (
+            <td>
+              <Link className='link link-primary' href={`/${lang}/dashboard/edit/${record.id}`}>
+                {t('common.edit')}
+              </Link>
+            </td>
+          )}
         </tr>
       ))}
     </>

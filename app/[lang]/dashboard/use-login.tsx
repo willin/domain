@@ -55,6 +55,7 @@ export function useLoginInfo() {
     loading,
     username,
     maxDomains,
-    records
+    records,
+    admin
   };
 }
