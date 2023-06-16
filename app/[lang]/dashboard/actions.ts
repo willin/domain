@@ -14,14 +14,15 @@ export async function checkDomainAction(params: { name: string; zone_name: strin
 }
 
 export async function createDomainAction(params: CFResult['result']) {
-  const { zone_name, name, content, type, proxied, username } = params;
+  const { zone_name, name, content, type, proxied, username, purpose } = params;
   return addPendingDomain({
     zoneId: FreeDomainsMapping?.[zone_name],
     name,
     content,
     type,
     proxied,
-    username
+    username,
+    purpose
   });
 }
 

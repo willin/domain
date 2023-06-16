@@ -1,9 +1,12 @@
 import { Locale } from '@/i18n-config';
+import { getUserRecords } from '@/lib/dns';
 import { translation } from '@/lib/i18n';
+import { toUnicode } from 'punycode';
 
 export const revalidate = 60;
 
 export default async function Page({ params: { lang } }: { params: { lang: Locale } }) {
+  const records = await getUserRecords({ username: '$$pending' });
   const t = translation(lang);
 
   return (
@@ -21,7 +24,20 @@ export default async function Page({ params: { lang } }: { params: { lang: Local
                 <th></th>
               </tr>
             </thead>
-            <tbody></tbody>
+            <tbody>
+              {records.map((record) => (
+                <tr key={record.name}>
+                  <td>{record.type}</td>
+                  <td>
+                    {record.name.includes('.')
+                      ? toUnicode(record.name)
+                      : toUnicode(`${record.name}.${record.zone_name}`)}
+                  </td>
+                  <td>{record.content}</td>
+                  <td>{record.purpose}</td>
+                </tr>
+              ))}
+            </tbody>
           </table>
         </div>
       </section>
