@@ -79,8 +79,9 @@ export const domainRecord = async (params: {
     case 'ADD': {
       const index = data.findIndex((r) => r.name === record.name && r.zone_name === record.zone_name && r.pending);
       if (index !== -1) {
-        data.splice(index, 1);
+        data[index] = record;
       }
+      break;
     }
     // eslint-disable-next-line no-fallthrough
     default: {
