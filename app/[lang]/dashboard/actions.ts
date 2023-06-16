@@ -52,7 +52,8 @@ export async function deleteDomainAction(params: CFResult['result']) {
 
 export async function adminDomainOperation(params: CFResult['result'], approve = false) {
   if (approve) {
-    await editDomain(params);
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+    await editDomain(params as any);
   }
   await domainRecord({ username: '$$pending', type: 'DELETE', record: params as any });
 }
