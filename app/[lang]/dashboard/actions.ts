@@ -1,7 +1,7 @@
 'use server';
 
 import { FreeDomainsMapping } from '@/lib/config';
-import { CFResult, addPendingDomain, checkDomain, deleteDomain, editDomain } from '@/lib/dns';
+import { CFResult, addPendingDomain, checkDomain, deleteDomain, domainRecord, editDomain } from '@/lib/dns';
 
 export async function checkDomainAction(params: { name: string; zone_name: string }) {
   const { zone_name, name } = params;
@@ -48,4 +48,11 @@ export async function deleteDomainAction(params: CFResult['result']) {
     username
   });
   return result;
+}
+
+export async function adminDomainOperation(params: CFResult['result'], approve = false) {
+  if (approve) {
+    await editDomain(params);
+  }
+  await domainRecord({ username: '$$pending', type: 'DELETE', record: params as any });
 }

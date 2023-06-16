@@ -2,8 +2,10 @@ import { Locale } from '@/i18n-config';
 import { getUserRecords } from '@/lib/dns';
 import { translation } from '@/lib/i18n';
 import { toUnicode } from 'punycode';
+import { ApproveDomain, DeclineDomain } from './client';
 
-export const revalidate = 60;
+export const revalidate = 0;
+export const dynamic = 'force-dynamic';
 
 export default async function Page({ params: { lang } }: { params: { lang: Locale } }) {
   const records = await getUserRecords({ username: '$$pending' });
@@ -35,6 +37,10 @@ export default async function Page({ params: { lang } }: { params: { lang: Local
                   </td>
                   <td>{record.content}</td>
                   <td>{record.purpose}</td>
+                  <td>
+                    <ApproveDomain record={record} label={t('domain.approve')} />{' '}
+                    <DeclineDomain record={record} label={t('domain.decline')} />
+                  </td>
                 </tr>
               ))}
             </tbody>
