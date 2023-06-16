@@ -73,9 +73,16 @@ export const domainRecord = async (params: {
       const { zoneId } = record as any as { zoneId: string };
       const zone_name = FreeDomainsConfig.find(([, zid]) => zid === zoneId)?.[0];
       if (zone_name) record.zone_name = zone_name;
+      data.push(record);
+      break;
+    }
+    case 'ADD': {
+      const index = data.findIndex((r) => r.name === record.name && r.zone_name === record.zone_name && r.pending);
+      if (index !== -1) {
+        data.splice(index, 1);
+      }
     }
     // eslint-disable-next-line no-fallthrough
-    case 'ADD':
     default: {
       data.push(record);
     }
