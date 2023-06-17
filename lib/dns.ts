@@ -19,6 +19,8 @@ export type CFResult = {
     priority: number;
     // custom
     username?: string;
+    pending?: boolean;
+    purpose?: string;
   };
 };
 
@@ -37,17 +39,25 @@ export const domainCounter = async (params: { zoneId: string; count?: number }) 
 
 export const domainRecord = async (params: {
   username: string;
-  type: 'ADD' | 'EDIT' | 'DELETE';
+  type: 'ADD' | 'EDIT' | 'DELETE' | 'PENDING';
   record: CFResult['result'];
 }) => {
   const { username, type, record } = params;
   const data = await getUserRecords({ username });
   switch (type) {
     case 'DELETE': {
-      const index = data.findIndex((r) => r.id === record.id);
-      if (index !== -1) {
-        data.splice(index, 1);
+      if (username === '$$pending') {
+        const index = data.findIndex((r) => r.name === record.name && r.zone_name === record.zone_name);
+        if (index !== -1) {
+          data.splice(index, 1);
+        }
+      } else {
+        const index = data.findIndex((r) => r.id === record.id);
+        if (index !== -1) {
+          data.splice(index, 1);
+        }
       }
+
       break;
     }
     case 'EDIT': {
@@ -58,7 +68,22 @@ export const domainRecord = async (params: {
       }
       break;
     }
-    case 'ADD':
+    case 'PENDING': {
+      record.pending = true;
+      const { zoneId } = record as any as { zoneId: string };
+      const zone_name = FreeDomainsConfig.find(([, zid]) => zid === zoneId)?.[0];
+      if (zone_name) record.zone_name = zone_name;
+      data.push(record);
+      break;
+    }
+    case 'ADD': {
+      const index = data.findIndex((r) => `${r.name}.${r.zone_name}` === record.name && r.pending);
+      if (index !== -1) {
+        data[index] = record;
+      }
+      break;
+    }
+    // eslint-disable-next-line no-fallthrough
     default: {
       data.push(record);
     }
@@ -79,6 +104,34 @@ export const checkDomain = async (params: { zoneId: string; name: string; domain
   const { result }: { result: { id: string }[] } = await response.json();
 
   return result?.length === 0;
+};
+
+export const addPendingDomain = async (params: {
+  zoneId: string;
+  name: string;
+  content: string;
+  type: string;
+  proxied?: boolean;
+  username?: string;
+  priority?: number;
+  purpose?: string;
+}) => {
+  await domainRecord({ username: params.username!, type: 'PENDING', record: params as any });
+  await domainRecord({ username: '$$pending', type: 'PENDING', record: params as any });
+};
+
+export const approvePendingDomain = async (params: { id: string }) => {
+  const data = await getUserRecords({ username: '$$pending' });
+  const record = data.find((r) => r.id === params.id);
+  if (!record) return false;
+  // eslint-disable-next-line @typescript-eslint/no-unsafe-argument
+  const result = await editDomain(record as any);
+  await domainRecord({
+    username: '$$pending',
+    type: 'DELETE',
+    record
+  });
+  return result;
 };
 
 export const editDomain = async (params: {

@@ -3,6 +3,7 @@ import { Locale } from '@/i18n-config';
 import { Logout } from './logout';
 import { MainContainer } from './container';
 import { GoBack } from './go-back';
+import { GoManage } from './go-manage';
 
 export default async function AdminLayout({
   params: { lang },
@@ -27,6 +28,7 @@ export default async function AdminLayout({
       <article className='prose'>{children}</article>
       <div className='text-center py-4'>
         <GoBack label={t('common.go_back')} />
+        <GoManage />
         <Logout label={t('common.logout')} />
       </div>
     </MainContainer>

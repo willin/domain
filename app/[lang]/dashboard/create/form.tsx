@@ -23,6 +23,7 @@ export function CreateForm({ lang }: { lang: Locale }) {
   const [proxied, setProxied] = useState(true);
   const [type, setType] = useState('CNAME');
   const [content, setContent] = useState('');
+  const [purpose, setPurpose] = useState('');
   const [valid, setValid] = useState(false);
   const [validContent, setValidContent] = useState(false);
   const [checked, setChecked] = useState(false);
@@ -52,6 +53,7 @@ export function CreateForm({ lang }: { lang: Locale }) {
       name,
       zone_name: zoneName,
       content,
+      purpose,
       type,
       proxied,
       username
@@ -158,7 +160,7 @@ export function CreateForm({ lang }: { lang: Locale }) {
         </div>
       </div>
 
-      <div className='form-control'>
+      <div className='form-control my-2'>
         <label className='cursor-pointer label'>
           <span className='label-text'>CDN Proxy</span>
           <input
@@ -170,6 +172,22 @@ export function CreateForm({ lang }: { lang: Locale }) {
               'input-disabled': !valid
             })}
             disabled={!valid}
+          />
+        </label>
+      </div>
+
+      <div className='form-control my-2'>
+        <label className='input-group'>
+          <span className='w-32'>{t('domain.purpose')}</span>
+          <input
+            type='text'
+            placeholder={t('domain.purpose_tip')}
+            name='purpose'
+            value={purpose}
+            onChange={(e) => {
+              setPurpose(e.target.value);
+            }}
+            className={clsx('w-full input input-bordered input-secondary')}
           />
         </label>
       </div>
@@ -202,8 +220,8 @@ export function CreateForm({ lang }: { lang: Locale }) {
           disabled={!valid}
           onClick={() => setPending(true)}
           className={clsx('btn', {
-            'btn-disabled': pending || !validContent || !agree,
-            'btn-secondary': valid
+            'btn-disabled': pending || !validContent || !agree || !purpose.trim(),
+            'btn-secondary': valid && purpose.trim()
           })}>
           {t('domain.save')}
         </button>

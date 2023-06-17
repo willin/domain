@@ -3,7 +3,6 @@ import { translation } from '@/lib/i18n';
 import { CreateAndTitle } from './create';
 import { DomainList } from './table';
 import { MAX_LIMIT_FOLLOWER, MAX_LIMIT_USER, MAX_LIMIT_VIP } from '@/lib/config';
-import { CFResult } from '@/lib/dns';
 
 export const revalidate = 60;
 
