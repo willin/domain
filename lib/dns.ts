@@ -77,7 +77,7 @@ export const domainRecord = async (params: {
       break;
     }
     case 'ADD': {
-      const index = data.findIndex((r) => r.name === record.name && r.zone_name === record.zone_name && r.pending);
+      const index = data.findIndex((r) => `${r.name}.${r.zone_name}` === record.name && r.pending);
       if (index !== -1) {
         data[index] = record;
       }
