@@ -29,6 +29,7 @@
     "purpose": "域名用途",
     "purpose_tip": "描述域名使用场景（必填）",
     "pending": "等待审核",
+    "username": "用户名",
     "approve": "通过",
     "decline": "拒绝",
     "confirm_delete": "确认要删除该域名吗？",

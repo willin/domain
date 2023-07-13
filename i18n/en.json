@@ -29,6 +29,7 @@
     "purpose": "Purpose",
     "purpose_tip": "Describe domain purpose",
     "pending": "Pending",
+    "username": "Username",
     "approve": "Approve",
     "decline": "Decline",
     "confirm_delete": "Are you sure to delete this domain?",
