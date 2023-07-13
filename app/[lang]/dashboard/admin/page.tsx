@@ -23,6 +23,7 @@ export default async function Page({ params: { lang } }: { params: { lang: Local
                 <th>{t('domain.name')}</th>
                 <th>{t('domain.content')}</th>
                 <th>{t('domain.purpose')}</th>
+                <th>{t('domain.username')}</th>
                 <th></th>
               </tr>
             </thead>
@@ -37,6 +38,7 @@ export default async function Page({ params: { lang } }: { params: { lang: Local
                   </td>
                   <td>{record.content}</td>
                   <td>{record.purpose}</td>
+                  <td>{record.username}</td>
                   <td>
                     <ApproveDomain record={record} label={t('domain.approve')} />{' '}
                     <DeclineDomain record={record} label={t('domain.decline')} />
