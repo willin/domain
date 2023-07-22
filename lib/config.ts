@@ -3,7 +3,7 @@ export const AdminId = process.env.ADMIN_ID || 'willin';
 export const MAX_LIMIT_ADMIN = Number(process.env.MAX_LIMIT_ADMIN) || 100;
 export const MAX_LIMIT_VIP = Number(process.env.MAX_LIMIT_VIP) || 20;
 export const MAX_LIMIT_FOLLOWER = Number(process.env.MAX_LIMIT_FOLLOWED) || 5;
-export const MAX_LIMIT_USER = Number(process.env.MAX_LIMIT_USER) || 1;
+export const MAX_LIMIT_USER = Number(process.env.MAX_LIMIT_USER) || 0;
 
 export const FreeDomainsConfig: [string, string][] = process.env.FREE_DOMAINS
   ? JSON.parse(process.env.FREE_DOMAINS)
