@@ -12,5 +12,5 @@ export default function DetectLanguage() {
     if (locale !== i18n.locale()) {
       i18n.locale(locale);
     }
-  }, [location]);
+  }, [location, i18n]);
 }

@@ -17,6 +17,7 @@ import { ThemeProvider } from './components/use-theme';
 import { sessionStore } from './helpers/session';
 import { useI18n } from 'remix-i18n';
 import DetectLanguage from './components/detect-lang';
+import Layout from './components/layout';
 
 export const meta: MetaFunction = () => {
   return [
@@ -57,7 +58,9 @@ export default function App() {
           <Links />
         </head>
         <body>
-          <Outlet />
+          <Layout>
+            <Outlet />
+          </Layout>
           <ScrollRestoration />
           <Scripts />
           <LiveReload />
