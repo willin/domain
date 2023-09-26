@@ -4,13 +4,13 @@ import { useI18n } from 'remix-i18n';
 import { getLocale } from '~/i18n';
 
 export default function DetectLanguage() {
-  const location = useLocation();
+  const { pathname } = useLocation();
   const i18n = useI18n();
 
   useEffect(() => {
-    const locale = getLocale(location.pathname);
+    const locale = getLocale(pathname);
     if (locale !== i18n.locale()) {
       i18n.locale(locale);
     }
-  }, [location, i18n]);
+  }, [pathname, i18n]);
 }

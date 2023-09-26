@@ -1,4 +1,9 @@
-import { type LoaderFunction, redirect, type ActionFunction } from '@remix-run/cloudflare';
+import {
+  type LoaderFunction,
+  redirect,
+  type ActionFunction,
+  json
+} from '@remix-run/cloudflare';
 import { z } from 'zod';
 import { sessionStore } from '~/helpers/session';
 import { themes } from '~/themes';
@@ -14,7 +19,9 @@ export const action: ActionFunction = async ({ request }) => {
   switch (request.method) {
     case 'PUT':
     case 'POST': {
-      const session = await sessionStore.getSession(request.headers.get('Cookie'));
+      const session = await sessionStore.getSession(
+        request.headers.get('Cookie')
+      );
       session.set('theme', theme);
       return json(
         { success: true },
