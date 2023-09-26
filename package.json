@@ -5,28 +5,37 @@
   "type": "module",
   "scripts": {
     "build": "remix build",
-    "dev": "remix dev --manual -c \"npm run start\"",
-    "start": "wrangler pages dev --compatibility-date=2023-06-21 ./public",
-    "typecheck": "tsc"
+    "dev": "remix dev --manual -c \"npm run start:dev\"",
+    "start:dev": "wrangler pages dev --compatibility-date=2023-08-15 ./public --d1=dns --local",
+    "start": "wrangler pages dev --compatibility-date=2023-08-15 ./public",
+    "typecheck": "tsc",
+    "db:list": "wrangler d1 migrations list dns",
+    "db:apply": "npx wrangler d1 migrations apply dns"
   },
   "dependencies": {
     "@remix-run/cloudflare": "^2.0.1",
     "@remix-run/cloudflare-pages": "^2.0.1",
-    "@remix-run/css-bundle": "^2.0.1",
     "@remix-run/react": "^2.0.1",
-    "isbot": "^3.6.8",
+    "classnames": "^2.3.2",
+    "isbot": "^3.7.0",
     "react": "^18.2.0",
-    "react-dom": "^18.2.0"
+    "react-dom": "^18.2.0",
+    "remix-auth": "^3.5.1",
+    "remix-auth-github": "^1.6.0",
+    "remix-i18n": "^1.0.1",
+    "zod": "^3.22.2"
   },
   "devDependencies": {
-    "@cloudflare/workers-types": "^4.20230518.0",
+    "@cloudflare/workers-types": "^4.20230922.0",
     "@remix-run/dev": "^2.0.1",
     "@remix-run/eslint-config": "^2.0.1",
-    "@types/react": "^18.2.20",
+    "@types/react": "^18.2.22",
     "@types/react-dom": "^18.2.7",
-    "eslint": "^8.38.0",
-    "typescript": "^5.1.0",
-    "wrangler": "^3.1.1"
+    "daisyui": "^3.8.0",
+    "eslint": "^8.50.0",
+    "tailwindcss": "^3.3.3",
+    "typescript": "^5.2.2",
+    "wrangler": "^3.9.1"
   },
   "engines": {
     "node": ">=18.0.0"

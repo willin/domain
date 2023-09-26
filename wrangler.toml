@@ -1,0 +1,4 @@
+[[d1_databases]]
+binding = "RECORDS" # i.e. available in your Worker on env.DB
+database_name = "dns"
+database_id = "e343fcf5-564b-498b-b9a7-0372dc4ee029"
