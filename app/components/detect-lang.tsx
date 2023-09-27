@@ -12,5 +12,12 @@ export default function DetectLanguage() {
     if (locale !== i18n.locale()) {
       i18n.locale(locale);
     }
+    try {
+      // @ts-ignore
+      // eslint-disable-next-line
+      (window.adsbygoogle = window.adsbygoogle || []).push({});
+    } catch (e) {
+      //
+    }
   }, [pathname, i18n]);
 }

@@ -1,11 +1,11 @@
-import { useResolvedPath } from '@remix-run/react';
+import { useLocation } from '@remix-run/react';
 import { useEffect, useState } from 'react';
 
 const SCRIPT =
   'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5059418763237956';
 
 export default function Bootstrap() {
-  const { pathname } = useResolvedPath();
+  const { pathname } = useLocation();
   const [blocked, setBlocked] = useState(false);
 
   useEffect(() => {
