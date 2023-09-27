@@ -30,7 +30,9 @@ export function ThemeProvider({
 }) {
   const [theme, setTheme] = useState<string | null>(() => {
     if (specifiedTheme) {
-      return themes.includes(specifiedTheme) ? specifiedTheme : null;
+      return themes.find(({ id }) => id === specifiedTheme)
+        ? specifiedTheme
+        : null;
     }
 
     if (typeof window !== 'object') return null;
