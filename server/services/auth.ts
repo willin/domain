@@ -47,9 +47,12 @@ export class AuthService implements IAuthService {
     });
 
     this.#sessionStorage = sessionStorage;
-    this.#authenticator = new Authenticator<User>(this.#sessionStorage as unknown as SessionStorage, {
-      throwOnError: true
-    });
+    this.#authenticator = new Authenticator<User>(
+      this.#sessionStorage as unknown as SessionStorage,
+      {
+        throwOnError: true
+      }
+    );
 
     let callbackURL = new URL(env.GITHUB_CALLBACK_URL);
     callbackURL.hostname = hostname;

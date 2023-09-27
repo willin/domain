@@ -6,8 +6,12 @@ export const loader: LoaderFunction = async ({ request, context, params }) => {
   const referer = params.redirect_uri;
   const returnPath = referer ? new URL(referer).pathname : '/';
 
-  return await context.services.auth.authenticator.authenticate(provider, request, {
-    successRedirect: returnPath,
-    failureRedirect: returnPath
-  });
+  return await context.services.auth.authenticator.authenticate(
+    provider,
+    request,
+    {
+      successRedirect: returnPath,
+      failureRedirect: returnPath
+    }
+  );
 };

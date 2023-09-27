@@ -1,6 +1,7 @@
 import styles from './tailwind.css';
 import {
   json,
+  redirect,
   type LinksFunction,
   type LoaderFunction
 } from '@remix-run/cloudflare';
@@ -37,11 +38,20 @@ export const links: LinksFunction = () => [
   { rel: 'icon', href: '/favicon.png', type: 'image/png' }
 ];
 
-export const loader: LoaderFunction = async ({ request }) => {
+export const loader: LoaderFunction = async ({ request, context }) => {
+  const url = new URL(request.url);
+  if (url.pathname !== '/' && url.pathname.endsWith('/')) {
+    throw redirect(request.url.slice(0, -1), {
+      status: 308
+    });
+  }
   const session = await sessionStore.getSession(request.headers.get('Cookie'));
   const theme = (session.get('theme') as string) || 'retro';
+  const user = await context.services.auth.authenticator.isAuthenticated(
+    request
+  );
 
-  return json({ theme });
+  return json({ theme, user });
 };
 
 export default function App() {

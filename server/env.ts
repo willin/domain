@@ -13,7 +13,11 @@ export let EnvSchema = z.object({
   COOKIE_SESSION_SECRET: z.string().min(1).optional().default('s3cret'),
   GITHUB_ID: z.string().min(1),
   GITHUB_SECRET: z.string().min(1),
-  GITHUB_CALLBACK_URL: z.string().url().optional()
+  GITHUB_CALLBACK_URL: z
+    .string()
+    .url()
+    .optional()
+    .default('https://domain.willin.wang/auth/github/callback')
 });
 
 export type Env = z.infer<typeof EnvSchema>;

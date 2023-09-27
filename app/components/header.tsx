@@ -11,7 +11,7 @@ export default function MainHeader() {
       <div className='navbar bg-base-100'>
         <div className='navbar-start'>
           <Link
-            to={`/${i18n.locale()}/`}
+            to={`/${i18n.locale()}`}
             className='btn btn-ghost normal-case text-xl'>
             Willin Domains
           </Link>
