@@ -16,6 +16,8 @@
       "~/*": ["./app/*"]
     },
     "skipLibCheck": true,
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
 
     // Remix takes care of building everything in `remix build`.
     "noEmit": true

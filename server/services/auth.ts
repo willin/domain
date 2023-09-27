@@ -3,7 +3,6 @@ import { Authenticator } from 'remix-auth';
 import type { SessionStorage } from '@remix-run/cloudflare';
 import { GitHubStrategy } from 'remix-auth-github';
 import { z } from 'zod';
-import type { Env } from '../env';
 
 const UserSchema = z.object({
   username: z.string(),
@@ -34,7 +33,7 @@ export class AuthService implements IAuthService {
   #sessionStorage: SessionStorage<typeof SessionSchema>;
   #authenticator: Authenticator<User>;
 
-  constructor(env: Env, hostname: string) {
+  constructor(env: RemixServer.Env, hostname: string) {
     let sessionStorage = createCookieSessionStorage({
       cookie: {
         name: 'sid',

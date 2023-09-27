@@ -10,7 +10,8 @@
     "start": "wrangler pages dev --compatibility-date=2023-08-15 ./public",
     "typecheck": "tsc",
     "db:list": "wrangler d1 migrations list dns",
-    "db:apply": "npx wrangler d1 migrations apply dns"
+    "db:apply": "npx wrangler d1 migrations apply dns",
+    "prepare": "husky install"
   },
   "dependencies": {
     "@remix-run/cloudflare": "^2.0.1",
@@ -33,11 +34,22 @@
     "@types/react-dom": "^18.2.7",
     "daisyui": "^3.8.0",
     "eslint": "^8.50.0",
+    "husky": "^8.0.3",
+    "lint-staged": "^14.0.1",
+    "prettier": "^3.0.3",
     "tailwindcss": "^3.3.3",
     "typescript": "^5.2.2",
     "wrangler": "^3.10.0"
   },
   "engines": {
     "node": ">=18.0.0"
+  },
+  "lint-staged": {
+    "*.+(js|jsx|json|yml|yaml|css|less|scss|ts|tsx|md|graphql|mdx|vue)": [
+      "prettier --write"
+    ],
+    "*.+(js|jsx|ts|tsx|vue)": [
+      "eslint --fix"
+    ]
   }
 }

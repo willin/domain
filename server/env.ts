@@ -17,7 +17,8 @@ export let EnvSchema = z.object({
     .string()
     .url()
     .optional()
-    .default('https://domain.willin.wang/auth/github/callback')
+    .default('https://domain.willin.wang/auth/github/callback'),
+  CF_API_TOKEN: z.string()
 });
 
 export type Env = z.infer<typeof EnvSchema>;
