@@ -17,3 +17,5 @@ CREATE TABLE `records` (
 CREATE UNIQUE INDEX IF NOT EXISTS idx_records_pk ON records(`name`, `zone_id`);
 CREATE INDEX IF NOT EXISTS idx_records_user ON records(`username`, `created_at`);
 CREATE INDEX IF NOT EXISTS idx_records_status ON records(`pending`, `created_at`);
+CREATE INDEX IF NOT EXISTS idx_records_id ON records(`id`);
+CREATE INDEX IF NOT EXISTS idx_records_zone_id ON records(`zone_id`);

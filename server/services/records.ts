@@ -51,8 +51,8 @@ export interface IRecordService {
     content: string;
     type: string;
     proxied?: boolean;
-    username?: string;
     priority?: number;
+    // username?: string;
   }): Promise<boolean>;
   deleteRecord(params: { zone_id: string; id: string }): Promise<boolean>;
   checkRecord(params: { zone_id: string; name: string }): Promise<boolean>;
@@ -161,16 +161,9 @@ export class RecordService implements IRecordService {
     }
     const { success } = await this.#db
       .prepare(
-        'UPDATE records SET raw = ?1, pending = ?2 WHERE name = ?3 AND zone_id = ?4'
+        'UPDATE records SET name = ?2, content = ?3, type = ?4, proxied = ?5, priority = ?6, raw = ?7 WHERE id = ?1'
       )
-      .bind(JSON.stringify(data), PendingStatus.APPROVED, name, zone_id)
-      .run();
-
-    const { success } = await this.#db
-      .prepare(
-        'UPDATE records SET name = ?2, content = ?3, type = ?4, proxied = ?5, priority = ?6 WHERE id = ?1'
-      )
-      .bind(id, name, content, type, proxied, priority)
+      .bind(id, name, content, type, proxied, priority, JSON.stringify(data))
       .run();
     return success;
   }
