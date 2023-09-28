@@ -17,7 +17,11 @@ export default function Bootstrap() {
       //
     }
     // Ignore core pages
-    if (['/', '/zh', '/en'].includes(pathname)) return;
+    if (
+      ['/', '/zh', '/en'].includes(pathname) ||
+      window.location.hostname === 'localhost'
+    )
+      return;
     // (A) TEST FETCH HEADER REQUEST TO GOOGLE ADSENSE
     const test = new Request(SCRIPT, { method: 'HEAD', mode: 'no-cors' });
     // (B) FIRE THE REQEST

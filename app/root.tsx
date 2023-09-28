@@ -47,10 +47,8 @@ export const loader: LoaderFunction = async ({ request, context }) => {
   }
   const session = await sessionStore.getSession(request.headers.get('Cookie'));
   const theme = (session.get('theme') as string) || 'retro';
-  const user = await context.services.auth.authenticator.isAuthenticated(
-    request
-  );
-
+  const user =
+    await context.services.auth.authenticator.isAuthenticated(request);
   return json({ theme, user });
 };
 

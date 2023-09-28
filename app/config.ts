@@ -4,6 +4,8 @@ export enum PendingStatus {
   REJECT
 }
 
+export const AdminUsers = ['willin'];
+
 export const DNSType = ['A', 'AAAA', 'CNAME', 'NS', 'TXT'] as const;
 
 export const BlockedList = [

@@ -18,7 +18,7 @@ export const action: ActionFunction = async ({ request, context, params }) => {
     provider,
     request,
     {
-      successRedirect: returnPath,
+      successRedirect: '/dashboard',
       failureRedirect: returnPath
     }
   );

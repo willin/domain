@@ -91,7 +91,9 @@ export class CloudflareAnalyticsProvider
         sites[reqHost] = (sites[reqHost] || 1) + item.sum.visits;
       }
     }
-    json = Object.entries(sites).sort((a, b) => (a[1] - b[1] > 0 ? -1 : 1));
+    const json = Object.entries(sites).sort((a, b) =>
+      a[1] - b[1] > 0 ? -1 : 1
+    );
     return json;
   }
 }

@@ -21,3 +21,48 @@ export const validateIpv6 = (ip: string): boolean => {
     ip
   );
 };
+
+export function getPlaceHolder(type: string) {
+  switch (type) {
+    case 'A': {
+      return '1.2.3.4';
+    }
+    case 'AAAA': {
+      return '2001:4860:4860::8888';
+    }
+    case 'CNAME': {
+      return 'willin.github.io';
+    }
+    case 'NS': {
+      return 'ns1.example.com';
+    }
+    case 'MX': {
+      return 'mx1.example.com';
+    }
+    default: {
+      return '';
+    }
+  }
+}
+
+export function validateContent(type: string, c: string) {
+  switch (type) {
+    case 'A': {
+      return validateIpv4(c);
+    }
+    case 'AAAA': {
+      return validateIpv6(c);
+    }
+    case 'CNAME': {
+      return validateDomain(c);
+    }
+    case 'MX':
+    case 'NS': {
+      return validateDomain(c) || validateIpv4(c) || validateIpv6(c);
+    }
+    default: {
+      // TXT
+      return true;
+    }
+  }
+}
