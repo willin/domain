@@ -15,6 +15,7 @@ declare global {
 declare module '@remix-run/cloudflare' {
   interface AppLoadContext {
     env: Env;
+    CACHE: KVNamespace;
     RECORDS: D1Database;
     services: RemixServer.Services;
   }

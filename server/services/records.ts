@@ -1,9 +1,13 @@
+import { z } from 'zod';
+import { PendingStatus } from '~/config';
+import {
+  CloudflareAnalyticsProvider,
+  type ICloudflareAnalyticsProvider
+} from '../provider/cloudflare-analytics';
 import {
   CloudflareDNSProvider,
   type ICloudflareDNSProvider
-} from 'server/provider/cloudflare-dns';
-import { z } from 'zod';
-import { PendingStatus } from '~/config';
+} from '../provider/cloudflare-dns';
 
 const RecordSchema = z.object({
   // user schema
@@ -25,6 +29,8 @@ const RecordSchema = z.object({
 });
 
 export interface IRecordService {
+  getTopSites(): Promise<[string, number][]>;
+  countSites(): Promise<[string, number][]>;
   getUserRecords({ username: string }): Promise<(typeof RecordSchema)[]>;
   addPendingRecord(params: {
     zone_id: string;
@@ -60,16 +66,41 @@ export interface IRecordService {
 
 export class RecordService implements IRecordService {
   #db: D1Database;
-  #dns: ICloudflareDNSProvider;
+  #kv: KVNamespace;
   #config: [string, string][];
   #getZoneName(params: { zone_id: string }): string {
     return this.#config.find(([, zid]) => zid === params.zone_id)?.[0];
   }
+  #dns: ICloudflareDNSProvider;
+  #analytics: ICloudflareAnalyticsProvider;
 
-  constructor(d1: D1Database, env: RemixServer.Env) {
+  constructor(env: RemixServer.Env, d1: D1Database, kv: KVNamespace) {
     this.#db = d1;
+    this.#kv = kv;
     this.#config = env.FREE_DOMAINS;
     this.#dns = new CloudflareDNSProvider(env);
+    this.#analytics = new CloudflareAnalyticsProvider(env);
+  }
+
+  public async getTopSites() {
+    let json: [string, number][] = await this.#kv.get('$$sites', 'json');
+    if (!json) {
+      json = await this.#analytics.getTopSites();
+      await this.#kv.put('$$sites', JSON.stringify(json), {
+        expirationTtl: 7200
+      });
+    }
+    return json;
+  }
+
+  public async countSites() {
+    const stmt = this.#db.prepare(
+      'SELECT zone_id, COUNT(1) as count FROM records GROUP BY zone_id ORDER BY count DESC'
+    );
+    const result = await stmt.raw();
+    const total = result.reduce((acc, [, count]) => acc + count, 0);
+    result.unshift(['total', total]);
+    return result;
   }
 
   public async getUserRecords(params: { username: string }) {
@@ -153,7 +184,7 @@ export class RecordService implements IRecordService {
     return success;
   }
 
-  public editRecord(params: Parameters<IRecordService['editRecord']>[0]) {
+  public async editRecord(params: Parameters<IRecordService['editRecord']>[0]) {
     const { id, name, content, type, proxied = false, priority = 10 } = params;
     const data = await this.#dns.editDomain(params);
     if (!data) {

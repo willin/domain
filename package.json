@@ -6,7 +6,7 @@
   "scripts": {
     "build": "remix build",
     "dev": "remix dev --manual -c \"npm run start:dev\"",
-    "start:dev": "wrangler pages dev --compatibility-date=2023-08-15 ./public --d1=dns --local",
+    "start:dev": "wrangler pages dev --compatibility-date=2023-08-15 ./public --local",
     "start": "wrangler pages dev --compatibility-date=2023-08-15 ./public",
     "typecheck": "tsc",
     "db:list": "wrangler d1 migrations list dns",

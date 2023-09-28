@@ -19,6 +19,10 @@ export let EnvSchema = z.object({
     .optional()
     .default('https://domain.willin.wang/auth/github/callback'),
   CF_API_TOKEN: z.string(),
+  CF_ACCOUNT_ID: z.string(),
+  CF_SITE_TAGS: z
+    .string()
+    .transform((v) => z.string().array().parse(JSON.parse(v))),
   FREE_DOMAINS: z
     .string()
     .transform((v) =>
