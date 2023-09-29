@@ -47,6 +47,7 @@ export interface IRecordService {
     proxiable?: boolean;
     username?: string;
     priority?: number;
+    ttl?: number;
     purpose?: string;
   }): Promise<boolean>;
   approvePendingRecord(params: {
@@ -162,11 +163,12 @@ export class RecordService implements IRecordService {
       username = '',
       proxiable = false,
       priority = 10,
+      ttl = 1,
       purpose = ''
     } = params;
     const { success } = await this.#db
       .prepare(
-        'INSERT INTO records (username, pending, purpose, name, content, type, zone_id, ttl, proxiable, priority) VALUES (?1, ?2, ?3, ?4, ?5, ?6, ?7, ?8, ?9, ?10)'
+        'INSERT INTO records (username, pending, purpose, name, content, type, zone_id, ttl, proxiable, priority, raw) VALUES (?1, ?2, ?3, ?4, ?5, ?6, ?7, ?8, ?9, ?10, ?11)'
       )
       .bind(
         username,
@@ -178,7 +180,8 @@ export class RecordService implements IRecordService {
         zone_id,
         ttl,
         proxiable,
-        priority
+        priority,
+        '{}'
       )
       .run();
     return success;
@@ -242,14 +245,30 @@ export class RecordService implements IRecordService {
     return success;
   }
 
-  public deleteRecord(params: Parameters<IRecordService['deleteRecord']>[0]) {
-    return this.#dns.deleteDomain(params);
+  public async deleteRecord(
+    params: Parameters<IRecordService['deleteRecord']>[0]
+  ) {
+    await Promise.all([
+      this.#dns.deleteDomain(params),
+      this.#db.prepare('DELETE FROM records WHERE id=?1').bind(params.id).run()
+    ]);
   }
 
-  public checkRecord(params: Parameters<IRecordService['checkRecord']>[0]) {
-    return this.#dns.checkDomain({
+  public async checkRecord(
+    params: Parameters<IRecordService['checkRecord']>[0]
+  ) {
+    const available = await this.#dns.checkDomain({
       ...params,
       domain: this.#getZoneName(params)
     });
+    if (!available) return false;
+    const { name, zone_id } = params;
+    const stmt = this.#db
+      .prepare(
+        'SELECT count(1) as count FROM records WHERE name = ?1 AND zone_id = ?2 LIMIT 1'
+      )
+      .bind(name, zone_id);
+    const result = await stmt.first();
+    return result.count === 0;
   }
 }

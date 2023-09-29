@@ -91,12 +91,11 @@ export class CloudflareDNSProvider implements ICloudflareDNSProvider {
       ttl: 1
     };
     if (type !== 'MX' && type !== 'TXT') {
-      form.proxiable = proxiable;
+      form.proxiable = !!proxiable;
     }
     if (type === 'MX') {
       form.priority = priority;
     }
-    console.log(ApiEndpoint);
     const data: CFResult = await fetch(
       `${ApiEndpoint(zone_id)}${id ? `/${id}` : ''}`,
       {

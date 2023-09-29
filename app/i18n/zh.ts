@@ -29,7 +29,7 @@ export const dict: I18nDict = {
     check: '校验',
     save: '保存',
     purpose: '域名用途',
-    purpose_tip: '描述域名使用场景（必填）',
+    purpose_tip: '描述域名使用场景（必须包含中文字符）',
     pending: '等待审核',
     username: '用户名',
     approve: '通过',

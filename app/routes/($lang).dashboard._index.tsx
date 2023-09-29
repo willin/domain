@@ -72,7 +72,7 @@ export default function Dashboard() {
           className={clsx('btn btn-primary', {
             'btn-disabled': maxDomains - records.length <= 0
           })}
-          to='/dashboard/create'>
+          to='/dashboard/edit'>
           {t('common.create')}
         </LocaleLink>
       </nav>

@@ -32,7 +32,7 @@ export default function DashboardLayout() {
         <div className='text-center py-4'>
           {!pathname.endsWith('/dashboard') && (
             <div className='tooltip mr-4' data-tip={t('common.go_back')}>
-              <button className='btn btn-circle' onClick={() => navigate(-1)}>
+              <LocaleLink to='/dashboard' className='btn btn-circle'>
                 <svg
                   viewBox='0 0 512 512'
                   className='fill-current'
@@ -48,7 +48,7 @@ export default function DashboardLayout() {
                     d='M244 400L100 256l144-144M120 256h292'
                   />
                 </svg>
-              </button>
+              </LocaleLink>
             </div>
           )}
           {AdminUsers.includes(user.username) && (

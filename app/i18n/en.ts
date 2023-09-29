@@ -29,7 +29,7 @@ export const dict: I18nDict = {
     check: 'Check',
     save: 'Save',
     purpose: 'Purpose',
-    purpose_tip: 'Describe domain purpose',
+    purpose_tip: 'Describe domain purpose (Must contain Chinese characters)',
     pending: 'Pending',
     username: 'Username',
     approve: 'Approve',
@@ -37,7 +37,7 @@ export const dict: I18nDict = {
     confirm_delete: 'Are you sure to delete this domain?',
     punycode_notice:
       'Note: Use Punycode domain name when adding domain binding',
-    agree: 'I have read and agree to the ',
-    rules: 'Domain Registration Rules'
+    agree: 'I have read and agree to the',
+    rules: ' Domain Registration Rules'
   }
 };
