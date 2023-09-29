@@ -17,6 +17,7 @@ import { DNSType } from '~/config';
 import { useI18n } from 'remix-i18n';
 import { getPlaceHolder, validateContent } from '~/helpers/validation';
 import { toASCII, toUnicode } from '~/helpers/punycode';
+import AdSlot from '~/components/adsense';
 
 export const loader: LoaderFunction = async ({ context, params, request }) => {
   const { FREE_DOMAINS } = context.env;
@@ -313,6 +314,7 @@ export default function EditPage() {
           </>
         )}
       </Form>
+      <AdSlot />
     </>
   );
 }
