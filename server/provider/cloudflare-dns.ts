@@ -37,11 +37,11 @@ export interface ICloudflareDNSProvider {
   deleteDomain(params: { id: string; zone_id: string }): Promise<boolean>;
 }
 
+const ApiEndpoint = (zone_id: string) =>
+  `https://api.cloudflare.com/client/v4/zones/${zone_id}/dns_records`;
+
 export class CloudflareDNSProvider implements ICloudflareDNSProvider {
   #ApiToken: string;
-  #ApiEndpoint: (
-    zone_id: string
-  ) => `https://api.cloudflare.com/client/v4/zones/${zone_id}/dns_records`;
 
   constructor(env: RemixServer.Env) {
     this.#ApiToken = env.CF_API_TOKEN;
@@ -54,7 +54,7 @@ export class CloudflareDNSProvider implements ICloudflareDNSProvider {
     if (!isAdmin && BlockedList.includes(name)) return false;
     if (name.includes('.') || ['@', '*', '.'].includes(name)) return false;
     const response = await fetch(
-      `${this.#ApiEndpoint(zone_id)}?name=${toASCII(`${name}.${domain}`)}`,
+      `${ApiEndpoint(zone_id)}?name=${toASCII(`${name}.${domain}`)}`,
       {
         headers: {
           Authorization: `Bearer ${this.#ApiToken}`
@@ -96,9 +96,9 @@ export class CloudflareDNSProvider implements ICloudflareDNSProvider {
     if (type === 'MX') {
       form.priority = priority;
     }
-
+    console.log(ApiEndpoint);
     const data: CFResult = await fetch(
-      `${this.#ApiEndpoint(zone_id)}${id ? `/${id}` : ''}`,
+      `${ApiEndpoint(zone_id)}${id ? `/${id}` : ''}`,
       {
         method: id ? 'PUT' : 'POST',
         headers: {
@@ -120,7 +120,7 @@ export class CloudflareDNSProvider implements ICloudflareDNSProvider {
     params: Parameters<ICloudflareDNSProvider['deleteDomain']>[0]
   ) {
     const { id, zone_id } = params;
-    const data: CFResult = await fetch(`${this.#ApiEndpoint(zone_id)}/${id}`, {
+    const data: CFResult = await fetch(`${ApiEndpoint(zone_id)}/${id}`, {
       method: 'DELETE',
       headers: {
         Authorization: `Bearer ${this.#ApiToken}`

@@ -4,7 +4,7 @@ import {
   type ActionFunction,
   type LoaderFunction
 } from '@remix-run/cloudflare';
-import { useLoaderData, useNavigation } from '@remix-run/react';
+import { Form, useLoaderData, useNavigation } from '@remix-run/react';
 import { useI18n } from 'remix-i18n';
 import { toUnicode } from '~/helpers/punycode';
 
@@ -15,7 +15,20 @@ export const loader: LoaderFunction = async ({ context }) => {
   });
 };
 
-export const action: ActionFunction = async () => {};
+export const action: ActionFunction = async ({ request, context }) => {
+  const formData = await request.formData();
+  const _action = formData.get('_action');
+  const name = formData.get('name');
+  const zone_id = formData.get('zone_id');
+
+  if (_action === 'approve') {
+    await context.services.records.approvePendingRecord({ name, zone_id });
+  }
+  if (_action === 'decline') {
+    await context.services.records.declinePendingRecord({ name, zone_id });
+  }
+  return json({ success: 1 });
+};
 
 export default function AdminPanel() {
   const { records } = useLoaderData<typeof loader>();
@@ -39,25 +52,47 @@ export default function AdminPanel() {
           </thead>
           <tbody>
             {records.map((record) => (
-              <tr key={record.name}>
+              <tr key={`${record.name}.${record.zone_name}`}>
                 <td>{record.type}</td>
                 <td>{toUnicode(`${record.name}.${record.zone_name}`)}</td>
                 <td>{record.content}</td>
                 <td>{record.purpose}</td>
                 <td>{record.username}</td>
                 <td>
-                  <button
-                    className={clsx('btn btn-xs btn-success', {
-                      'btn-disabled': state !== 'idle'
-                    })}>
-                    {t('domain.approve')}
-                  </button>{' '}
-                  <button
-                    className={clsx('btn btn-xs btn-error', {
-                      'btn-disabled': state !== 'idle'
-                    })}>
-                    {t('domain.decline')}
-                  </button>
+                  <Form method='POST' className='inline' action='.'>
+                    <input type='hidden' name='name' value={record.name} />
+                    <input
+                      type='hidden'
+                      name='zone_id'
+                      value={record.zone_id}
+                    />
+                    <button
+                      type='submit'
+                      name='_action'
+                      value='approve'
+                      className={clsx('btn btn-xs btn-success', {
+                        'btn-disabled': state !== 'idle'
+                      })}>
+                      {t('domain.approve')}
+                    </button>{' '}
+                  </Form>
+                  <Form method='POST' className='inline' action='.'>
+                    <input type='hidden' name='name' value={record.name} />
+                    <input
+                      type='hidden'
+                      name='zone_id'
+                      value={record.zone_id}
+                    />
+                    <button
+                      type='submit'
+                      name='_action'
+                      value='decline'
+                      className={clsx('btn btn-xs btn-error', {
+                        'btn-disabled': state !== 'idle'
+                      })}>
+                      {t('domain.decline')}
+                    </button>
+                  </Form>
                 </td>
               </tr>
             ))}

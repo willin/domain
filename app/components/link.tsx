@@ -29,7 +29,8 @@ export function LocaleNavLink({
   ...props
 }: NavLinkProps & { to: string }) {
   const { locale } = useI18n();
-  const path = i18nConfig.fallbackLng === locale() ? to : `/${locale()}${to}`;
+  const path =
+    i18nConfig.fallbackLng === locale() ? to ?? '/' : `/${locale()}${to}`;
 
   return (
     <NavLink to={path} {...props}>
