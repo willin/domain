@@ -1,10 +1,15 @@
 export enum PendingStatus {
   APPROVED,
   PENDING,
-  REJECT
+  DECLINED
 }
 
-export const AdminUsers = ['willin'];
+export const MAX_LIMIT_USER = 0 as const;
+export const MAX_LIMIT_FOLLOWER = 5 as const;
+export const MAX_LIMIT_VIP = 20 as const;
+export const MAX_LIMIT_ADMIN = 100 as const;
+
+export const AdminUsers = ['willin'] as const;
 
 export const DNSType = ['A', 'AAAA', 'CNAME', 'NS', 'TXT'] as const;
 

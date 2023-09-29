@@ -46,7 +46,7 @@ export interface IRecordService {
     zone_id: string;
     name: string;
   }): Promise<boolean>;
-  rejectPendingRecord(params: {
+  declinePendingRecord(params: {
     zone_id: string;
     name: string;
   }): Promise<boolean>;
@@ -83,10 +83,11 @@ export class RecordService implements IRecordService {
   }
 
   public async getTopSites() {
-    let json: [string, number][] = await this.#kv.get('$$sites', 'json');
+    const key = '$$TopSites';
+    let json: [string, number][] = await this.#kv.get(key, 'json');
     if (!json) {
       json = await this.#analytics.getTopSites();
-      await this.#kv.put('$$sites', JSON.stringify(json), {
+      await this.#kv.put(key, JSON.stringify(json), {
         expirationTtl: 7200
       });
     }
@@ -94,13 +95,21 @@ export class RecordService implements IRecordService {
   }
 
   public async countSites() {
-    const stmt = this.#db.prepare(
-      'SELECT zone_id, COUNT(1) as count FROM records GROUP BY zone_id ORDER BY count DESC'
-    );
-    const result = await stmt.raw();
-    const total = result.reduce((acc, [, count]) => acc + count, 0);
-    result.unshift(['total', total]);
-    return result;
+    const key = '$$TotalCounts';
+    let json: [string, number][] = await this.#kv.get(key, 'json');
+    if (!json) {
+      const stmt = this.#db.prepare(
+        'SELECT zone_id, COUNT(1) as count FROM records GROUP BY zone_id ORDER BY count DESC'
+      );
+      const result = await stmt.raw();
+      const total = result.reduce((acc, [, count]) => acc + count, 0);
+      result.unshift(['total', total]);
+      json = result;
+      await this.#kv.put(key, JSON.stringify(json), {
+        expirationTtl: 7200
+      });
+    }
+    return json;
   }
 
   public async getUserRecords(params: { username: string }) {
@@ -111,8 +120,8 @@ export class RecordService implements IRecordService {
         'SELECT * FROM records WHERE username = ?1 ORDER BY created_at DESC'
       )
       .bind(username);
-    const result = await stmt.all();
-    return RecordSchema.array().parse(result);
+    const { results } = await stmt.all();
+    return RecordSchema.array().parse(results);
   }
 
   public async addPendingRecord(
@@ -171,15 +180,15 @@ export class RecordService implements IRecordService {
     return success;
   }
 
-  public async rejectPendingRecord(
-    params: Parameters<IRecordService['rejectPendingRecord']>[0]
+  public async declinePendingRecord(
+    params: Parameters<IRecordService['declinePendingRecord']>[0]
   ) {
     const { name, zone_id } = params;
     const { success } = await this.#db
       .prepare(
         'UPDATE records SET pending = ?1 WHERE name = ?2 AND zone_id = ?3'
       )
-      .bind(PendingStatus.REJECT, name, zone_id)
+      .bind(PendingStatus.DECLINED, name, zone_id)
       .run();
     return success;
   }
