@@ -12,7 +12,7 @@ export type CFResult = {
     zone_id: string;
     zone_name: string;
     ttl: number;
-    proxied: boolean;
+    proxiable: boolean;
     priority: number;
   };
 };
@@ -30,7 +30,7 @@ export interface ICloudflareDNSProvider {
     name: string;
     content: string;
     type: string;
-    proxied?: boolean;
+    proxiable?: boolean;
     username?: string;
     priority?: number;
   }): Promise<CFResult['result'] | null>;
@@ -77,7 +77,7 @@ export class CloudflareDNSProvider implements ICloudflareDNSProvider {
       content,
       type,
       username = '',
-      proxied = false,
+      proxiable = false,
       priority = 10
     } = params;
     if (!id && !DNSType.includes(type)) {
@@ -91,7 +91,7 @@ export class CloudflareDNSProvider implements ICloudflareDNSProvider {
       ttl: 1
     };
     if (type !== 'MX' && type !== 'TXT') {
-      form.proxied = proxied;
+      form.proxiable = proxiable;
     }
     if (type === 'MX') {
       form.priority = priority;

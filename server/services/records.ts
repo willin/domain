@@ -13,7 +13,7 @@ const RecordSchema = z.object({
   // user schema
   username: z.string(),
   pending: z.enum(PendingStatus),
-  pursose: z.string().optional().default(''),
+  purpose: z.string().optional().default(''),
   // record schema
   id: z.string().optional(),
   name: z.string(),
@@ -23,7 +23,7 @@ const RecordSchema = z.object({
   zone_id: z.string(),
   // zone_name: z.string(),
   ttl: z.number().optional().default(1),
-  proxied: z.boolean().default(true),
+  proxiable: z.boolean().default(true),
   priority: z.number().optional(),
   created_at: z.date().optional()
 });
@@ -37,7 +37,7 @@ export interface IRecordService {
     name: string;
     content: string;
     type: string;
-    proxied?: boolean;
+    proxiable?: boolean;
     username?: string;
     priority?: number;
     purpose?: string;
@@ -56,7 +56,7 @@ export interface IRecordService {
     name: string;
     content: string;
     type: string;
-    proxied?: boolean;
+    proxiable?: boolean;
     priority?: number;
     // username?: string;
   }): Promise<boolean>;
@@ -133,13 +133,13 @@ export class RecordService implements IRecordService {
       content,
       type,
       username = '',
-      proxied = false,
+      proxiable = false,
       priority = 10,
       purpose = ''
     } = params;
     const { success } = await this.#db
       .prepare(
-        'INSERT INTO records (username, pending, purpose, name, content, type, zone_id, ttl, proxied, priority) VALUES (?1, ?2, ?3, ?4, ?5, ?6, ?7, ?8, ?9, ?10)'
+        'INSERT INTO records (username, pending, purpose, name, content, type, zone_id, ttl, proxiable, priority) VALUES (?1, ?2, ?3, ?4, ?5, ?6, ?7, ?8, ?9, ?10)'
       )
       .bind(
         username,
@@ -150,7 +150,7 @@ export class RecordService implements IRecordService {
         type,
         zone_id,
         ttl,
-        proxied,
+        proxiable,
         priority
       )
       .run();
@@ -194,16 +194,23 @@ export class RecordService implements IRecordService {
   }
 
   public async editRecord(params: Parameters<IRecordService['editRecord']>[0]) {
-    const { id, name, content, type, proxied = false, priority = 10 } = params;
+    const {
+      id,
+      name,
+      content,
+      type,
+      proxiable = false,
+      priority = 10
+    } = params;
     const data = await this.#dns.editDomain(params);
     if (!data) {
       return false;
     }
     const { success } = await this.#db
       .prepare(
-        'UPDATE records SET name = ?2, content = ?3, type = ?4, proxied = ?5, priority = ?6, raw = ?7 WHERE id = ?1'
+        'UPDATE records SET name = ?2, content = ?3, type = ?4, proxiable = ?5, priority = ?6, raw = ?7 WHERE id = ?1'
       )
-      .bind(id, name, content, type, proxied, priority, JSON.stringify(data))
+      .bind(id, name, content, type, proxiable, priority, JSON.stringify(data))
       .run();
     return success;
   }
