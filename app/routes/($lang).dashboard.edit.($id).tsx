@@ -94,7 +94,9 @@ export const action: ActionFunction = async ({ context, params, request }) => {
     }
 
     return redirect(`${params.locale ? `/${params.locale}` : ''}/dashboard`);
-  } catch (e) {}
+  } catch (e) {
+    errors.server = true;
+  }
   return json({ errors, available: true });
 };
 
@@ -253,7 +255,8 @@ export default function EditPage() {
                   <a
                     className='text-primary'
                     href='https://github.com/willin/domain#%E8%A7%84%E5%88%99-rules'
-                    target='_blank' rel="noreferrer">
+                    target='_blank'
+                    rel='noreferrer'>
                     {t('domain.rules')}
                   </a>
                 </span>
