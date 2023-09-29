@@ -1,6 +1,5 @@
 import {
   Form,
-  Link,
   Outlet,
   useLocation,
   useNavigate,
@@ -8,6 +7,7 @@ import {
 } from '@remix-run/react';
 import { useEffect } from 'react';
 import { useI18n } from 'remix-i18n';
+import { LocaleLink } from '~/components/link';
 import { AdminUsers } from '~/config';
 
 export default function DashboardLayout() {
@@ -53,9 +53,7 @@ export default function DashboardLayout() {
           )}
           {AdminUsers.includes(user.username) && (
             <div className='tooltip mr-4' data-tip={'Manage'}>
-              <Link
-                to={`/${i18n.locale()}/dashboard/admin`}
-                className='btn btn-circle'>
+              <LocaleLink to='/dashboard/admin' className='btn btn-circle'>
                 <svg
                   className='fill-current'
                   xmlns='http://www.w3.org/2000/svg'
@@ -64,7 +62,7 @@ export default function DashboardLayout() {
                   viewBox='0 0 512 512'>
                   <path d='M64,384H448V341.33H64Zm0-106.67H448V234.67H64ZM64,128v42.67H448V128Z' />
                 </svg>
-              </Link>
+              </LocaleLink>
             </div>
           )}
           <div className='tooltip' data-tip={t('common.logout')}>

@@ -1,6 +1,6 @@
 import clsx from 'classnames';
 import { json, type LoaderFunction } from '@remix-run/cloudflare';
-import { Link, useLoaderData } from '@remix-run/react';
+import { useLoaderData } from '@remix-run/react';
 import { useI18n } from 'remix-i18n';
 import AdSlot from '~/components/adsense';
 import {
@@ -13,6 +13,7 @@ import {
 } from '~/config';
 import { toUnicode } from '~/helpers/punycode';
 import { useEffect, useState } from 'react';
+import { LocaleLink } from '~/components/link';
 
 export const loader: LoaderFunction = async ({ request, context }) => {
   const user =
@@ -67,13 +68,13 @@ export default function Dashboard() {
     <>
       <AdSlot />
       <nav className='flex justify-end'>
-        <Link
+        <LocaleLink
           className={clsx('btn btn-primary', {
             'btn-disabled': maxDomains - records.length <= 0
           })}
-          to={`/${locale()}/dashboard/create`}>
+          to='/dashboard/create'>
           {t('common.create')}
-        </Link>
+        </LocaleLink>
       </nav>
       <h2 className='my-4 text-2xl text-secondary'>
         {t('common.mine', {
@@ -96,7 +97,7 @@ export default function Dashboard() {
               {records.map((record) => (
                 <tr key={record.id || `${record.name}.${record.zone_id}`}>
                   <td>{record.type}</td>
-                  <td>{toUnicode(record.name)}</td>
+                  <td>{toUnicode(`${record.name}.${record.zone_name}`)}</td>
                   <td>{record.content}</td>
                   {record.pending !== PendingStatus.APPROVED ? (
                     <td>
@@ -108,11 +109,11 @@ export default function Dashboard() {
                     </td>
                   ) : (
                     <td>
-                      <Link
+                      <LocaleLink
                         className='link link-primary'
-                        to={`/${locale()}/dashboard/edit/${record.id}`}>
+                        to={`/dashboard/edit/${record.id}`}>
                         {t('common.edit')}
-                      </Link>
+                      </LocaleLink>
                     </td>
                   )}
                 </tr>
@@ -135,7 +136,8 @@ export default function Dashboard() {
               <a
                 href='https://github.com/willin'
                 target='_blank'
-                className='btn btn-xs btn-secondary ml-2' rel="noreferrer">
+                className='btn btn-xs btn-secondary ml-2'
+                rel='noreferrer'>
                 {t('common.follow')}
               </a>
             </li>
@@ -149,7 +151,8 @@ export default function Dashboard() {
                   locale() === 'zh'
                     ? 'https://afdian.net/a/willin'
                     : 'https://github.com/sponsors/willin'
-                } rel="noreferrer">
+                }
+                rel='noreferrer'>
                 {t('common.donate')}
               </a>
             </li>

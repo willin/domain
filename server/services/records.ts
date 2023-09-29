@@ -12,26 +12,33 @@ import {
 const RecordSchema = z.object({
   // user schema
   username: z.string(),
-  pending: z.enum(PendingStatus),
+  pending: z.enum(Object.values(PendingStatus)).or(z.number()),
   purpose: z.string().optional().default(''),
   // record schema
-  id: z.string().optional(),
+  id: z.string().optional().or(z.null()),
   name: z.string(),
   content: z.string(),
   type: z.string(),
   // comment: z.string().optional().default(''),
   zone_id: z.string(),
-  // zone_name: z.string(),
+  zone_name: z.string().optional().default(''),
   ttl: z.number().optional().default(1),
-  proxiable: z.boolean().default(true),
+  proxiable: z
+    .number()
+    .default(true)
+    .transform((v) => !!v),
   priority: z.number().optional(),
-  created_at: z.date().optional()
+  created_at: z
+    .string()
+    .optional()
+    .transform((v) => (v ? new Date(v) : null))
 });
 
 export interface IRecordService {
   getTopSites(): Promise<[string, number][]>;
   countSites(): Promise<[string, number][]>;
   getUserRecords({ username: string }): Promise<(typeof RecordSchema)[]>;
+  getPendingRecords(): Promise<(typeof RecordSchema)[]>;
   addPendingRecord(params: {
     zone_id: string;
     name: string;
@@ -121,7 +128,27 @@ export class RecordService implements IRecordService {
       )
       .bind(username);
     const { results } = await stmt.all();
-    return RecordSchema.array().parse(results);
+    return results.map((item) =>
+      RecordSchema.parse({
+        ...item,
+        zone_name: this.#getZoneName({ zone_id: item.zone_id })
+      })
+    );
+  }
+
+  public async getPendingRecords() {
+    const stmt = this.#db
+      .prepare(
+        'SELECT * FROM records WHERE pending = ?1 ORDER BY created_at DESC'
+      )
+      .bind(PendingStatus.PENDING);
+    const { results } = await stmt.all();
+    return results.map((item) =>
+      RecordSchema.parse({
+        ...item,
+        zone_name: this.#getZoneName({ zone_id: item.zone_id })
+      })
+    );
   }
 
   public async addPendingRecord(

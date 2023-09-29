@@ -39,7 +39,9 @@ export default function LocaleSwitch({ title }: { [k: string]: string }) {
           {Object.entries(languages).map(([key, { name, flag, unicode }]) => (
             <li key={key}>
               <Link
-                to={`/${key}${pathname?.replace(reg, '') || ''}`}
+                to={`${key === i18nConfig.fallbackLng ? '' : `/${key}`}${
+                  pathname?.replace(reg, '') || ''
+                }`}
                 className={clsx('flex btn-ghost', {
                   active: key === lang
                 })}>
