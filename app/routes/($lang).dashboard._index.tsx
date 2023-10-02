@@ -43,7 +43,9 @@ export default function Dashboard() {
       setFollowing(true);
       return;
     }
-    fetch(`https://api.github.com/users/${username}/following/${AdminId}`)
+    fetch(
+      `https://api.github.com/users/${username}/following/${AdminUsers?.[0]}`
+    )
       .then((res) => {
         if (res.status === 204) {
           setFollowing(true);
