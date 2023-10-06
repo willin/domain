@@ -66,7 +66,7 @@ export interface IRecordService {
     type: string;
     proxiable?: boolean;
     priority?: number;
-    // username?: string;
+    username?: string;
   }): Promise<boolean>;
   deleteRecord(params: { zone_id: string; id: string }): Promise<boolean>;
   checkRecord(params: {
@@ -197,8 +197,10 @@ export class RecordService implements IRecordService {
   ) {
     const { name, zone_id } = params;
     const stmt = this.#db
-      .prepare('SELECT * FROM records WHERE name = ?1 AND zone_id = ?2 LIMIT 1')
-      .bind(name, zone_id);
+      .prepare(
+        'SELECT * FROM records WHERE name = ?1 AND zone_id = ?2 AND pending = ?3 LIMIT 1'
+      )
+      .bind(name, zone_id, PendingStatus.PENDING);
 
     const result = await stmt.first();
     const item = RecordSchema.parse(result);
@@ -208,9 +210,15 @@ export class RecordService implements IRecordService {
     }
     const { success } = await this.#db
       .prepare(
-        'UPDATE records SET raw = ?1, pending = ?2 WHERE name = ?3 AND zone_id = ?4'
+        'UPDATE records SET raw = ?1, pending = ?2 WHERE name = ?3 AND zone_id = ?4 AND pending = ?5'
       )
-      .bind(JSON.stringify(data), PendingStatus.APPROVED, name, zone_id)
+      .bind(
+        JSON.stringify(data),
+        PendingStatus.APPROVED,
+        name,
+        zone_id,
+        PendingStatus.PENDING
+      )
       .run();
     return success;
   }

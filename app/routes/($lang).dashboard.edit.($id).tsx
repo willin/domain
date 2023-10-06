@@ -43,14 +43,15 @@ export const action: ActionFunction = async ({ context, params, request }) => {
   const zone_id = formData.get('zone_id');
   const name = formData.get('name');
   const errors = {};
+  const user =
+    await context.services.auth.authenticator.isAuthenticated(request);
+
   if (_action === 'check') {
     let available = await context.services.records.checkRecord({
       zone_id,
       name
     });
     if (!available) {
-      const user =
-        await context.services.auth.authenticator.isAuthenticated(request);
       const records = await context.services.records.getUserRecords({
         username: user?.username
       });
@@ -70,8 +71,6 @@ export const action: ActionFunction = async ({ context, params, request }) => {
   const type = formData.get('type');
   const proxiable = formData.get('proxiable') ? 1 : 0;
   const purpose = formData.get('purpose') || '';
-  const user =
-    await context.services.auth.authenticator.isAuthenticated(request);
 
   if (!validateContent(type, content)) {
     errors.content = true;
@@ -102,7 +101,8 @@ export const action: ActionFunction = async ({ context, params, request }) => {
         name,
         content,
         type,
-        proxiable
+        proxiable,
+        username: user?.username
       });
     }
     if (_action === 'delete') {
