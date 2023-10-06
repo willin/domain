@@ -34,7 +34,7 @@ export class AuthService implements IAuthService {
   #authenticator: Authenticator<User>;
 
   constructor(env: RemixServer.Env, hostname: string) {
-    let sessionStorage = createCookieSessionStorage({
+    const sessionStorage = createCookieSessionStorage({
       cookie: {
         name: 'sid',
         httpOnly: true,
@@ -53,7 +53,7 @@ export class AuthService implements IAuthService {
       }
     );
 
-    let callbackURL = new URL(env.GITHUB_CALLBACK_URL);
+    const callbackURL = new URL(env.GITHUB_CALLBACK_URL);
     callbackURL.hostname = hostname;
 
     this.#authenticator.use(

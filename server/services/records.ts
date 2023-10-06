@@ -1,5 +1,5 @@
 import { z } from 'zod';
-import { PendingStatus } from '~/config';
+import { BlockedList, PendingStatus } from '~/config';
 import {
   CloudflareAnalyticsProvider,
   type ICloudflareAnalyticsProvider
@@ -69,7 +69,12 @@ export interface IRecordService {
     // username?: string;
   }): Promise<boolean>;
   deleteRecord(params: { zone_id: string; id: string }): Promise<boolean>;
-  checkRecord(params: { zone_id: string; name: string }): Promise<boolean>;
+  checkRecord(params: {
+    zone_id: string;
+    name: string;
+    username?: string;
+    isAdmin?: boolean;
+  }): Promise<boolean>;
 }
 
 export class RecordService implements IRecordService {
@@ -257,12 +262,16 @@ export class RecordService implements IRecordService {
   public async checkRecord(
     params: Parameters<IRecordService['checkRecord']>[0]
   ) {
+    const { name, zone_id, isAdmin = false } = params;
+    if (!isAdmin && BlockedList.includes(name)) return false;
+    if (name.includes('.') || ['@', '*', '.'].includes(name)) return false;
+
     const available = await this.#dns.checkDomain({
       ...params,
       domain: this.#getZoneName(params)
     });
+
     if (!available) return false;
-    const { name, zone_id } = params;
     const stmt = this.#db
       .prepare(
         'SELECT count(1) as count FROM records WHERE name = ?1 AND zone_id = ?2 LIMIT 1'

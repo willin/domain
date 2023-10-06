@@ -1,4 +1,4 @@
-import { BlockedList, DNSType } from '~/config';
+import { DNSType } from '~/config';
 import { toASCII } from '~/helpers/punycode';
 
 export type CFResult = {
@@ -50,9 +50,7 @@ export class CloudflareDNSProvider implements ICloudflareDNSProvider {
   public async checkDomain(
     params: Parameters<ICloudflareDNSProvider['checkDomain']>[0]
   ) {
-    const { zone_id, domain, name, isAdmin = false } = params;
-    if (!isAdmin && BlockedList.includes(name)) return false;
-    if (name.includes('.') || ['@', '*', '.'].includes(name)) return false;
+    const { zone_id, domain, name } = params;
     const response = await fetch(
       `${ApiEndpoint(zone_id)}?name=${toASCII(`${name}.${domain}`)}`,
       {

@@ -44,10 +44,25 @@ export const action: ActionFunction = async ({ context, params, request }) => {
   const name = formData.get('name');
   const errors = {};
   if (_action === 'check') {
-    const available = await context.services.records.checkRecord({
+    let available = await context.services.records.checkRecord({
       zone_id,
       name
     });
+    if (!available) {
+      const user =
+        await context.services.auth.authenticator.isAuthenticated(request);
+      const records = await context.services.records.getUserRecords({
+        username: user?.username
+      });
+      const item = records.find(
+        (record) => record.name === name && record.zone_id === zone_id
+      );
+      if (item) {
+        available = true;
+        return json({ available, type: item.type });
+      }
+    }
+
     return json({ available });
   }
 
@@ -104,7 +119,11 @@ export const action: ActionFunction = async ({ context, params, request }) => {
 export default function EditPage() {
   const { id } = useParams();
   const { record, FreeDomains } = useLoaderData<typeof loader>();
-  const { errors, available } = useActionData<typeof action>() || {};
+  const {
+    errors,
+    available,
+    type: fixedType
+  } = useActionData<typeof action>() || {};
   const { state } = useNavigation();
   const { t } = useI18n();
 
@@ -196,7 +215,10 @@ export default function EditPage() {
                 <select
                   name='type'
                   className='select select-bordered select-secondary'
-                  defaultValue={!id ? 'CNAME' : record.type}>
+                  disabled={!!fixedType}
+                  defaultValue={
+                    fixedType ? fixedType : !id ? 'CNAME' : record.type
+                  }>
                   {DNSType.map((t) => (
                     <option value={t} key={t}>
                       {t}
