@@ -1,11 +1,13 @@
 import { useLocation } from '@remix-run/react';
 import { useEffect, useState } from 'react';
+import { useI18n } from 'remix-i18n';
 
 const SCRIPT =
   'https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-5059418763237956';
 
 export default function Bootstrap() {
   const { pathname } = useLocation();
+  const { t } = useI18n();
   const [blocked, setBlocked] = useState(false);
 
   useEffect(() => {
@@ -53,7 +55,8 @@ export default function Bootstrap() {
       <script async={true} src={SCRIPT} crossOrigin='anonymous' />
       {blocked && (
         <article>
-          <h1>AdBlocked</h1>
+          <h1>{t('common.adblock')}</h1>
+          <p>{t('common.adblock_message')}</p>
         </article>
       )}
     </>

@@ -117,6 +117,18 @@ export const themes = [
   {
     name: '❄️  Winter',
     id: 'winter'
+  },
+  {
+    name: '🕶️ Dim',
+    id: 'dim'
+  },
+  {
+    name: '🤓 Nord',
+    id: 'nord'
+  },
+  {
+    name: '🌇 Sunset',
+    id: 'sunset'
   }
 ] as const;
 
@@ -130,5 +142,7 @@ export const darkThemes = [
   'dracula',
   'business',
   'night',
-  'coffee'
+  'coffee',
+  'dim',
+  'sunset'
 ] as const;

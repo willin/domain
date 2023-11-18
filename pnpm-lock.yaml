@@ -56,8 +56,8 @@ devDependencies:
     specifier: ^18.2.8
     version: 18.2.8
   daisyui:
-    specifier: ^3.8.1
-    version: 3.8.1
+    specifier: ^4.4.2
+    version: 4.4.2(postcss@8.4.30)
   eslint:
     specifier: ^8.50.0
     version: 8.50.0
@@ -3237,13 +3237,6 @@ packages:
       }
     dev: true
 
-  /colord@2.9.3:
-    resolution:
-      {
-        integrity: sha512-jeC1axXpnb0/2nn/Y1LPuLdgXBLH7aDcHu4KEKfqw3CUhX7ZpfBSlPKyqXE6btIgEzfWtrX3/tyBCaCvXvMkOw==
-      }
-    dev: true
-
   /colorette@2.0.20:
     resolution:
       {
@@ -3381,20 +3374,27 @@ packages:
       }
     dev: true
 
-  /daisyui@3.8.1:
+  /culori@3.2.0:
     resolution:
       {
-        integrity: sha512-4ULfP67PScxnJed5hxV83HLOhk/nVqZYGBz7BLk5KvCTr2Ij1V+xTEhk5Ix1lhbQC4qEL6be/aio2XeEa3920g==
+        integrity: sha512-HIEbTSP7vs1mPq/2P9In6QyFE0Tkpevh0k9a+FkjhD+cwsYm9WRSbn4uMdW9O0yXlNYC3ppxL3gWWPOcvEl57w==
+      }
+    engines: { node: ^12.20.0 || ^14.13.1 || >=16.0.0 }
+    dev: true
+
+  /daisyui@4.4.2(postcss@8.4.30):
+    resolution:
+      {
+        integrity: sha512-Ecg5loskj9dkaAnTSK5Xn5jb24TqDlQIg/NJ025jCkw2S/zw12btjvLgY2Sv5Ws1DFVoVBRs3XYXyojZG7zVnw==
       }
     engines: { node: '>=16.9.0' }
     dependencies:
-      colord: 2.9.3
       css-selector-tokenizer: 0.8.0
-      postcss: 8.4.30
+      culori: 3.2.0
+      picocolors: 1.0.0
       postcss-js: 4.0.1(postcss@8.4.30)
-      tailwindcss: 3.3.3
     transitivePeerDependencies:
-      - ts-node
+      - postcss
     dev: true
 
   /damerau-levenshtein@1.0.8:

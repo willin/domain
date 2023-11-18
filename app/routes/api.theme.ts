@@ -5,7 +5,7 @@ import {
   json
 } from '@remix-run/cloudflare';
 import { z } from 'zod';
-import { sessionStore } from '~/helpers/session';
+import { themeCookie } from '~/cookie.server';
 import { themes } from '~/themes';
 
 export const loader: LoaderFunction = () => {
@@ -19,15 +19,11 @@ export const action: ActionFunction = async ({ request }) => {
   switch (request.method) {
     case 'PUT':
     case 'POST': {
-      const session = await sessionStore.getSession(
-        request.headers.get('Cookie')
-      );
-      session.set('theme', theme);
       return json(
         { success: true },
         {
           headers: {
-            'Set-Cookie': await sessionStore.commitSession(session)
+            'Set-Cookie': await themeCookie.serialize(theme)
           }
         }
       );
