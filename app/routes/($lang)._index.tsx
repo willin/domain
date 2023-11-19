@@ -51,7 +51,7 @@ export default function Index() {
           )}
         </ol>
       </div>
-      <Form method='post' action='/auth/github'>
+      <Form method='post' action='/auth/sso'>
         <button className='btn glass mb-4 text-primary w-full' type='submit'>
           {t('common.login')}
         </button>

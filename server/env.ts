@@ -11,13 +11,8 @@ export let EnvSchema = z.object({
       return 'development';
     }),
   COOKIE_SESSION_SECRET: z.string().min(1).optional().default('s3cret'),
-  GITHUB_ID: z.string().min(1),
-  GITHUB_SECRET: z.string().min(1),
-  GITHUB_CALLBACK_URL: z
-    .string()
-    .url()
-    .optional()
-    .default('https://domain.willin.wang/auth/github/callback'),
+  SSO_ID: z.string().min(1),
+  SSO_SECRET: z.string().min(1),
   CF_API_TOKEN: z.string(),
   CF_ACCOUNT_ID: z.string(),
   CF_SITE_TAGS: z

@@ -29,9 +29,9 @@ dependencies:
   remix-auth:
     specifier: ^3.5.1
     version: 3.5.1(@remix-run/react@2.0.1)(@remix-run/server-runtime@1.19.3)
-  remix-auth-github:
-    specifier: ^1.6.0
-    version: 1.6.0(@remix-run/server-runtime@1.19.3)(remix-auth@3.5.1)
+  remix-auth-sso:
+    specifier: ^0.0.2
+    version: 0.0.2(@remix-run/server-runtime@1.19.3)(remix-auth@3.5.1)
   remix-i18n:
     specifier: ^1.0.1
     version: 1.0.1(@remix-run/react@2.0.1)(react@18.2.0)
@@ -8159,36 +8159,34 @@ packages:
       unified: 10.1.2
     dev: true
 
-  /remix-auth-github@1.6.0(@remix-run/server-runtime@1.19.3)(remix-auth@3.5.1):
+  /remix-auth-oauth2@1.11.0(@remix-run/server-runtime@1.19.3)(remix-auth@3.5.1):
     resolution:
       {
-        integrity: sha512-qdQmWVVEDHxnzMPn7XE0s7QX5GYba0uH3MDW+lVJiCoHDZCGymqmGCajLThL5vFJdwSx0C4GpQJ5EgEsIjQ3pA==
+        integrity: sha512-Yf1LF6NLYPFa7X2Rax/VEhXmYXFjZOi/q+7DmbMeoMHjAfkpqxbvzqqYSKIKDGR51z5TXR5na4to4380mir5bg==
       }
     peerDependencies:
-      '@remix-run/server-runtime': ^1.0.0
-      remix-auth: ^3.4.0
-    dependencies:
-      '@remix-run/server-runtime': 1.19.3
-      remix-auth: 3.5.1(@remix-run/react@2.0.1)(@remix-run/server-runtime@1.19.3)
-      remix-auth-oauth2: 1.9.0(@remix-run/server-runtime@1.19.3)(remix-auth@3.5.1)
-    transitivePeerDependencies:
-      - supports-color
-    dev: false
-
-  /remix-auth-oauth2@1.9.0(@remix-run/server-runtime@1.19.3)(remix-auth@3.5.1):
-    resolution:
-      {
-        integrity: sha512-ROSir28FVK4UCpialrW6dGbaboYGihfa/Qz5ifAoQ56fyTfXv4TwZ4R/AQxr1HVRU6WFmXNJiWDg51Q6+ZoLGQ==
-      }
-    peerDependencies:
-      '@remix-run/server-runtime': ^1.0.0
-      remix-auth: ^3.2.2
+      '@remix-run/server-runtime': ^1.0.0 || ^2.0.0
+      remix-auth: ^3.6.0
     dependencies:
       '@remix-run/server-runtime': 1.19.3
       debug: 4.3.4
       remix-auth: 3.5.1(@remix-run/react@2.0.1)(@remix-run/server-runtime@1.19.3)
-      uuid: 8.3.2
     transitivePeerDependencies:
+      - supports-color
+    dev: false
+
+  /remix-auth-sso@0.0.2(@remix-run/server-runtime@1.19.3)(remix-auth@3.5.1):
+    resolution:
+      {
+        integrity: sha512-rD2pkrP5cCEnmz7d2PiZ1cGyVxoUeUNtMjCEIGyXbIEaQGQYaqSvVnJu2nVBMjnbuwY6FDPkW78/WRUGpd0FMQ==
+      }
+    peerDependencies:
+      remix-auth: ^3.4.0
+    dependencies:
+      remix-auth: 3.5.1(@remix-run/react@2.0.1)(@remix-run/server-runtime@1.19.3)
+      remix-auth-oauth2: 1.11.0(@remix-run/server-runtime@1.19.3)(remix-auth@3.5.1)
+    transitivePeerDependencies:
+      - '@remix-run/server-runtime'
       - supports-color
     dev: false
 

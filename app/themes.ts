@@ -1,4 +1,4 @@
-export const defaultDarkTheme = 'dracula';
+export const defaultDarkTheme = 'sunset';
 export const defaultLightTheme = 'retro';
 
 export const themes = [
