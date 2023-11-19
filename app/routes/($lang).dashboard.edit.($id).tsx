@@ -28,7 +28,7 @@ export const loader: LoaderFunction = async ({ context, params, request }) => {
   const user =
     await context.services.auth.authenticator.isAuthenticated(request);
   const records = await context.services.records.getUserRecords({
-    username: user?.username
+    username: user?.id
   });
   const record = records.find((record) => record.id === params.id);
   if (!record) {
@@ -53,7 +53,7 @@ export const action: ActionFunction = async ({ context, params, request }) => {
     });
     if (!available) {
       const records = await context.services.records.getUserRecords({
-        username: user?.username
+        username: user?.id
       });
       const item = records.find(
         (record) => record.name === name && record.zone_id === zone_id
@@ -90,7 +90,7 @@ export const action: ActionFunction = async ({ context, params, request }) => {
         content,
         type,
         proxiable,
-        username: user.username,
+        username: user.id,
         purpose
       });
     }
@@ -102,7 +102,7 @@ export const action: ActionFunction = async ({ context, params, request }) => {
         content,
         type,
         proxiable,
-        username: user?.username
+        username: user?.id
       });
     }
     if (_action === 'delete') {
@@ -167,7 +167,7 @@ export default function EditPage() {
       </h2>
       <Form action='.' method='POST' onChange={validator}>
         <div className='form-control my-4'>
-          <div className='input-group'>
+          <div className='join'>
             <input
               type='text'
               placeholder={t('domain.name')}
@@ -211,7 +211,7 @@ export default function EditPage() {
         {(id || available) && (
           <>
             <div className='form-control my-4'>
-              <div className='input-group'>
+              <div className='join'>
                 <select
                   name='type'
                   className='select select-bordered select-secondary'
@@ -253,7 +253,7 @@ export default function EditPage() {
             </div>
             {!id && (
               <div className='form-control my-2'>
-                <label className='input-group'>
+                <label className='join'>
                   <span className='w-32'>{t('domain.purpose')}</span>
                   <input
                     type='text'

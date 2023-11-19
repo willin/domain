@@ -26,7 +26,7 @@ export const loader: LoaderFunction = async ({ request, context }) => {
     (user.thirdparty || []).find((x) => x.provider === 'github')?.username ||
     '';
   const records = await context.services.records.getUserRecords({
-    username: user.username
+    username: user.id
   });
 
   return json({ records, user });
