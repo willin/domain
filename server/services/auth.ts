@@ -1,7 +1,7 @@
 import { createCookieSessionStorage } from '@remix-run/cloudflare';
 import { Authenticator } from 'remix-auth';
 import type { SessionStorage } from '@remix-run/cloudflare';
-import { GitHubStrategy } from 'remix-auth-github';
+import { SSOStrategy } from 'remix-auth-sso';
 import { z } from 'zod';
 
 const UserSchema = z.object({
@@ -33,7 +33,7 @@ export class AuthService implements IAuthService {
   #sessionStorage: SessionStorage<typeof SessionSchema>;
   #authenticator: Authenticator<User>;
 
-  constructor(env: RemixServer.Env, hostname: string) {
+  constructor(env: RemixServer.Env, url: URL) {
     const sessionStorage = createCookieSessionStorage({
       cookie: {
         name: 'sid',
@@ -53,25 +53,18 @@ export class AuthService implements IAuthService {
       }
     );
 
-    const callbackURL = new URL(env.GITHUB_CALLBACK_URL);
-    callbackURL.hostname = hostname;
-
+    const callbackURL = `${url.protocol}//${url.hostname}${
+      ['80', '443', ''].includes(url.port) ? '' : `:${url.port}`
+    }/auth/sso/callback`;
     this.#authenticator.use(
-      new GitHubStrategy(
+      new SSOStrategy(
         {
-          clientID: env.GITHUB_ID,
-          clientSecret: env.GITHUB_SECRET,
-          callbackURL: callbackURL.toString()
+          clientID: env.SSO_ID,
+          clientSecret: env.SSO_SECRET,
+          callbackURL: callbackURL
         },
         async ({ profile }) => {
-          return {
-            displayName: profile._json.name,
-            username: profile._json.login,
-            email: profile._json.email ?? profile.emails?.at(0) ?? null,
-            avatar: profile._json.avatar_url,
-            githubId: profile._json.node_id
-            // isSponsor: await gh.isSponsoringMe(profile._json.node_id)
-          };
+          return profile;
         }
       )
     );

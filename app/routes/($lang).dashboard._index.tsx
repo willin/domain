@@ -16,11 +16,17 @@ import { useEffect, useState } from 'react';
 import { LocaleLink } from '~/components/link';
 
 export const loader: LoaderFunction = async ({ request, context }) => {
-  const user =
-    await context.services.auth.authenticator.isAuthenticated(request);
-
+  const user = await context.services.auth.authenticator.isAuthenticated(
+    request,
+    {
+      failureRedirect: '/'
+    }
+  );
+  user.github =
+    (user.thirdparty || []).find((x) => x.provider === 'github')?.username ||
+    '';
   const records = await context.services.records.getUserRecords({
-    username: user.username
+    username: user.id
   });
 
   return json({ records, user });
@@ -32,14 +38,10 @@ export default function Dashboard() {
   const [following, setFollowing] = useState(false);
   const [maxDomains, setMaxDomains] = useState(0);
 
-  const { username, vip = false } = user;
-  const admin = AdminUsers.includes(username);
+  const { github: username, type } = user;
 
   useEffect(() => {
-    if (!username || vip || admin) {
-      return;
-    }
-    if (AdminUsers.includes(username)) {
+    if (type === 'admin' || type === 'vip') {
       setFollowing(true);
       return;
     }
@@ -52,19 +54,19 @@ export default function Dashboard() {
         }
       })
       .catch(() => {});
-  }, [username, admin, vip]);
+  }, [username, type]);
 
   useEffect(() => {
-    if (admin) {
+    if (type === 'admin') {
       setMaxDomains(MAX_LIMIT_ADMIN);
-    } else if (vip) {
+    } else if (type === 'vip') {
       setMaxDomains(MAX_LIMIT_VIP);
     } else if (following) {
       setMaxDomains(MAX_LIMIT_FOLLOWER);
     } else {
       setMaxDomains(MAX_LIMIT_USER);
     }
-  }, [following, vip, admin]);
+  }, [following, type]);
 
   return (
     <>

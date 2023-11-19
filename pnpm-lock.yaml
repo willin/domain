@@ -29,9 +29,9 @@ dependencies:
   remix-auth:
     specifier: ^3.5.1
     version: 3.5.1(@remix-run/react@2.0.1)(@remix-run/server-runtime@1.19.3)
-  remix-auth-github:
-    specifier: ^1.6.0
-    version: 1.6.0(@remix-run/server-runtime@1.19.3)(remix-auth@3.5.1)
+  remix-auth-sso:
+    specifier: ^0.0.2
+    version: 0.0.2(@remix-run/server-runtime@1.19.3)(remix-auth@3.5.1)
   remix-i18n:
     specifier: ^1.0.1
     version: 1.0.1(@remix-run/react@2.0.1)(react@18.2.0)
@@ -56,8 +56,8 @@ devDependencies:
     specifier: ^18.2.8
     version: 18.2.8
   daisyui:
-    specifier: ^3.8.1
-    version: 3.8.1
+    specifier: ^4.4.2
+    version: 4.4.2(postcss@8.4.30)
   eslint:
     specifier: ^8.50.0
     version: 8.50.0
@@ -3237,13 +3237,6 @@ packages:
       }
     dev: true
 
-  /colord@2.9.3:
-    resolution:
-      {
-        integrity: sha512-jeC1axXpnb0/2nn/Y1LPuLdgXBLH7aDcHu4KEKfqw3CUhX7ZpfBSlPKyqXE6btIgEzfWtrX3/tyBCaCvXvMkOw==
-      }
-    dev: true
-
   /colorette@2.0.20:
     resolution:
       {
@@ -3381,20 +3374,27 @@ packages:
       }
     dev: true
 
-  /daisyui@3.8.1:
+  /culori@3.2.0:
     resolution:
       {
-        integrity: sha512-4ULfP67PScxnJed5hxV83HLOhk/nVqZYGBz7BLk5KvCTr2Ij1V+xTEhk5Ix1lhbQC4qEL6be/aio2XeEa3920g==
+        integrity: sha512-HIEbTSP7vs1mPq/2P9In6QyFE0Tkpevh0k9a+FkjhD+cwsYm9WRSbn4uMdW9O0yXlNYC3ppxL3gWWPOcvEl57w==
+      }
+    engines: { node: ^12.20.0 || ^14.13.1 || >=16.0.0 }
+    dev: true
+
+  /daisyui@4.4.2(postcss@8.4.30):
+    resolution:
+      {
+        integrity: sha512-Ecg5loskj9dkaAnTSK5Xn5jb24TqDlQIg/NJ025jCkw2S/zw12btjvLgY2Sv5Ws1DFVoVBRs3XYXyojZG7zVnw==
       }
     engines: { node: '>=16.9.0' }
     dependencies:
-      colord: 2.9.3
       css-selector-tokenizer: 0.8.0
-      postcss: 8.4.30
+      culori: 3.2.0
+      picocolors: 1.0.0
       postcss-js: 4.0.1(postcss@8.4.30)
-      tailwindcss: 3.3.3
     transitivePeerDependencies:
-      - ts-node
+      - postcss
     dev: true
 
   /damerau-levenshtein@1.0.8:
@@ -8159,36 +8159,34 @@ packages:
       unified: 10.1.2
     dev: true
 
-  /remix-auth-github@1.6.0(@remix-run/server-runtime@1.19.3)(remix-auth@3.5.1):
+  /remix-auth-oauth2@1.11.0(@remix-run/server-runtime@1.19.3)(remix-auth@3.5.1):
     resolution:
       {
-        integrity: sha512-qdQmWVVEDHxnzMPn7XE0s7QX5GYba0uH3MDW+lVJiCoHDZCGymqmGCajLThL5vFJdwSx0C4GpQJ5EgEsIjQ3pA==
+        integrity: sha512-Yf1LF6NLYPFa7X2Rax/VEhXmYXFjZOi/q+7DmbMeoMHjAfkpqxbvzqqYSKIKDGR51z5TXR5na4to4380mir5bg==
       }
     peerDependencies:
-      '@remix-run/server-runtime': ^1.0.0
-      remix-auth: ^3.4.0
-    dependencies:
-      '@remix-run/server-runtime': 1.19.3
-      remix-auth: 3.5.1(@remix-run/react@2.0.1)(@remix-run/server-runtime@1.19.3)
-      remix-auth-oauth2: 1.9.0(@remix-run/server-runtime@1.19.3)(remix-auth@3.5.1)
-    transitivePeerDependencies:
-      - supports-color
-    dev: false
-
-  /remix-auth-oauth2@1.9.0(@remix-run/server-runtime@1.19.3)(remix-auth@3.5.1):
-    resolution:
-      {
-        integrity: sha512-ROSir28FVK4UCpialrW6dGbaboYGihfa/Qz5ifAoQ56fyTfXv4TwZ4R/AQxr1HVRU6WFmXNJiWDg51Q6+ZoLGQ==
-      }
-    peerDependencies:
-      '@remix-run/server-runtime': ^1.0.0
-      remix-auth: ^3.2.2
+      '@remix-run/server-runtime': ^1.0.0 || ^2.0.0
+      remix-auth: ^3.6.0
     dependencies:
       '@remix-run/server-runtime': 1.19.3
       debug: 4.3.4
       remix-auth: 3.5.1(@remix-run/react@2.0.1)(@remix-run/server-runtime@1.19.3)
-      uuid: 8.3.2
     transitivePeerDependencies:
+      - supports-color
+    dev: false
+
+  /remix-auth-sso@0.0.2(@remix-run/server-runtime@1.19.3)(remix-auth@3.5.1):
+    resolution:
+      {
+        integrity: sha512-rD2pkrP5cCEnmz7d2PiZ1cGyVxoUeUNtMjCEIGyXbIEaQGQYaqSvVnJu2nVBMjnbuwY6FDPkW78/WRUGpd0FMQ==
+      }
+    peerDependencies:
+      remix-auth: ^3.4.0
+    dependencies:
+      remix-auth: 3.5.1(@remix-run/react@2.0.1)(@remix-run/server-runtime@1.19.3)
+      remix-auth-oauth2: 1.11.0(@remix-run/server-runtime@1.19.3)(remix-auth@3.5.1)
+    transitivePeerDependencies:
+      - '@remix-run/server-runtime'
       - supports-color
     dev: false
 

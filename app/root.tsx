@@ -15,10 +15,11 @@ import {
   useLoaderData
 } from '@remix-run/react';
 import { ThemeProvider } from './components/use-theme';
-import { sessionStore } from './helpers/session';
 import { useI18n } from 'remix-i18n';
 import DetectLanguage from './components/detect-lang';
 import Layout from './components/layout';
+import { themeCookie } from './cookie.server';
+import { defaultLightTheme } from './themes';
 
 export const meta: MetaFunction = () => {
   return [
@@ -45,8 +46,9 @@ export const loader: LoaderFunction = async ({ request, context }) => {
       status: 308
     });
   }
-  const session = await sessionStore.getSession(request.headers.get('Cookie'));
-  const theme = (session.get('theme') as string) || 'retro';
+  const theme =
+    (await themeCookie.parse(request.headers.get('Cookie'))) ||
+    defaultLightTheme;
   const user =
     await context.services.auth.authenticator.isAuthenticated(request);
   return json({ theme, user });

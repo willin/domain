@@ -15,8 +15,7 @@ export const onRequest = createPagesFunctionHandler({
     const env = EnvSchema.parse(ctx.env);
 
     const url = new URL(ctx.request.url);
-    const { hostname } = url;
-    const auth = new AuthService(env, hostname);
+    const auth = new AuthService(env, url);
     const records = new RecordService(
       env,
       ctx.env.RECORDS as D1Database,

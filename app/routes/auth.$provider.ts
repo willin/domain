@@ -10,7 +10,7 @@ export const loader: LoaderFunction = () => {
 };
 
 export const action: ActionFunction = async ({ request, context, params }) => {
-  const provider = z.enum(['github']).parse(params.provider);
+  const provider = z.enum(['sso']).parse(params.provider);
   const referer = request.headers.get('referer');
   const returnPath = referer ? new URL(referer).pathname : '/';
 

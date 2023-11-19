@@ -8,7 +8,6 @@ import {
 import { useEffect } from 'react';
 import { useI18n } from 'remix-i18n';
 import { LocaleLink } from '~/components/link';
-import { AdminUsers } from '~/config';
 
 export default function DashboardLayout() {
   const { user } = useRouteLoaderData('root');
@@ -51,7 +50,7 @@ export default function DashboardLayout() {
               </LocaleLink>
             </div>
           )}
-          {AdminUsers.includes(user.username) && (
+          {user.type === 'admin' && (
             <div className='tooltip mr-4' data-tip={'Manage'}>
               <LocaleLink to='/dashboard/admin' className='btn btn-circle'>
                 <svg
