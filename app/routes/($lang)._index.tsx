@@ -1,13 +1,9 @@
-import { type LoaderFunction, json, redirect } from '@remix-run/cloudflare';
+import { type LoaderFunction, json } from '@remix-run/cloudflare';
 import { Form, useLoaderData } from '@remix-run/react';
 import { useI18n } from 'remix-i18n';
 import { toUnicode } from '~/helpers/punycode';
-import { i18nConfig } from '~/i18n';
 
 export const loader: LoaderFunction = async ({ context, params }) => {
-  if (params.lang && !i18nConfig.supportedLanguages.includes(params.lang)) {
-    return redirect('/');
-  }
   const FreeDomains = context.env.FREE_DOMAINS;
   const sites = await context.services.records.getTopSites();
   const counter = await context.services.records.countSites();

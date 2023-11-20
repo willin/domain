@@ -20,6 +20,7 @@ import DetectLanguage from './components/detect-lang';
 import Layout from './components/layout';
 import { themeCookie } from './cookie.server';
 import { defaultLightTheme } from './themes';
+import { i18nConfig } from './i18n';
 
 export const meta: MetaFunction = () => {
   return [
@@ -40,6 +41,9 @@ export const links: LinksFunction = () => [
 ];
 
 export const loader: LoaderFunction = async ({ request, context }) => {
+  if (params.lang && !i18nConfig.supportedLanguages.includes(params.lang)) {
+    return redirect('/');
+  }
   const url = new URL(request.url);
   if (url.pathname !== '/' && url.pathname.endsWith('/')) {
     throw redirect(request.url.slice(0, -1), {
