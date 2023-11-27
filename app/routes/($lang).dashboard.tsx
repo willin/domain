@@ -65,7 +65,7 @@ export default function DashboardLayout() {
             </div>
           )}
           <div className='tooltip' data-tip={t('common.logout')}>
-            <Form action='/api/logout' method='post'>
+            <Form action='/auth/logout' method='post'>
               <button className='btn btn-circle' type='submit'>
                 <svg
                   className='fill-current'

@@ -20,6 +20,9 @@ export const dict: I18nDict = {
     donate: '⚡ Sponsor Willin',
     user: 'User',
     follower: 'Github Follower',
+    confirm_logout: 'Are you sure to logout?',
+    profile: 'Profile',
+    upgrade: 'Upgrade/Renew VIP',
     vip: 'Sponsor / VIP',
     adblock: 'Adblock Detected',
     adblock_message: 'Please disable adblock to continue using this site.'

@@ -32,14 +32,14 @@
     "@remix-run/eslint-config": "^2.0.1",
     "@types/react": "^18.2.23",
     "@types/react-dom": "^18.2.8",
-    "daisyui": "^4.4.2",
+    "daisyui": "^4.4.6",
     "eslint": "^8.50.0",
     "husky": "^8.0.3",
     "lint-staged": "^14.0.1",
     "prettier": "^3.0.3",
-    "tailwindcss": "^3.3.3",
-    "typescript": "^5.2.2",
-    "wrangler": "^3.10.0"
+    "tailwindcss": "^3.3.5",
+    "typescript": "^5.3.2",
+    "wrangler": "^3.17.1"
   },
   "engines": {
     "node": ">=18.0.0"

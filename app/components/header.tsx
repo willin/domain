@@ -1,6 +1,7 @@
 import LocaleSwitch from './locale-switch';
 import ThemeSwitch from './theme-switch';
 import { LocaleLink } from './link';
+import UserPanel from './user-panel';
 
 export default function MainHeader() {
   return (
@@ -14,6 +15,7 @@ export default function MainHeader() {
         <div className='navbar-end'>
           <LocaleSwitch />
           <ThemeSwitch />
+          <UserPanel />
         </div>
       </div>
     </header>

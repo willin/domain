@@ -20,6 +20,9 @@ export const dict: I18nDict = {
     donate: '⚡ 去充电',
     user: '登录用户',
     follower: 'Github 关注粉丝',
+    confirm_logout: '确定要退出登录吗？',
+    profile: '个人资料',
+    upgrade: '升级/续费 VIP',
     vip: '打赏月捐 VIP',
     adblock: '发现广告拦截插件',
     adblock_message: '请关闭广告拦截插件以继续使用本站服务。'
