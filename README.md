@@ -11,11 +11,12 @@
 - js.cool
 - log.lu
 - sh.gg
+- css.fund (感谢 [面条](https://mt.ci/) 赞助)
 - kaiyuan.fund
 - v0.chat
 - 憨憨.我爱你
-- willin.vip
-- willin.love
+- ~~willin.vip~~ (暂时未对外开放注册)
+- ~~willin.love~~ (暂时未对外开放注册)
 
 > 如果您有好的域名可以 Fork 本项目部署自己的域名申请服务，或者可以将域名转移给我用作于开源项目使用。
 >
