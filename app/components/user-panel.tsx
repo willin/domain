@@ -39,7 +39,7 @@ export default function UserPanel() {
     <div className='dropdown dropdown-end'>
       <div tabIndex={0} className='btn btn-ghost gap-1 normal-case'>
         <IconUser />
-        {user.displayName}
+        <span className='hidden md:inline'>{user.displayName}</span>
         <svg
           width='12px'
           height='12px'
