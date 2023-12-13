@@ -182,7 +182,7 @@ export default function EditPage() {
             <select
               name='zone_id'
               defaultValue={!id ? '' : record.zone_id}
-              readOnly={id || available}
+              disabled={id || available}
               className={clsx('select select-bordered select-secondary', {
                 'select-error': typeof available !== 'undefined' && !available,
                 'select-disabled': id || available
