@@ -47,24 +47,27 @@ export const action: ActionFunction = async ({ context, params, request }) => {
     await context.services.auth.authenticator.isAuthenticated(request);
 
   if (_action === 'check') {
-    let available = await context.services.records.checkRecord({
-      zone_id,
-      name
-    });
-    if (!available) {
-      const records = await context.services.records.getUserRecords({
-        username: user?.id
+    let available = false;
+    if (zone_id && name) {
+      available = await context.services.records.checkRecord({
+        zone_id,
+        name
       });
-      const item = records.find(
-        (record) => record.name === name && record.zone_id === zone_id
-      );
-      if (item) {
-        available = true;
-        return json({ available, type: item.type });
+      if (!available) {
+        const records = await context.services.records.getUserRecords({
+          username: user?.id
+        });
+        const item = records.find(
+          (record) => record.name === name && record.zone_id === zone_id
+        );
+        if (item) {
+          available = true;
+          return json({ available, type: item.type });
+        }
       }
     }
 
-    return json({ available });
+    return json({ available, zone_id });
   }
 
   const content = formData.get('content');
@@ -82,6 +85,7 @@ export const action: ActionFunction = async ({ context, params, request }) => {
   if (Object.keys(errors).length > 0) {
     return json({ errors, available: true });
   }
+
   try {
     if (_action === 'create') {
       await context.services.records.addPendingRecord({
@@ -122,6 +126,7 @@ export default function EditPage() {
   const {
     errors,
     available,
+    zone_id,
     type: fixedType
   } = useActionData<typeof action>() || {};
   const { state } = useNavigation();
@@ -193,6 +198,13 @@ export default function EditPage() {
                 </option>
               ))}
             </select>
+            {(id || available) && (
+              <input
+                type='hidden'
+                name='zone_id'
+                value={id ? record.zone_id : zone_id}
+              />
+            )}
             {!id && (
               <button
                 name='_action'
