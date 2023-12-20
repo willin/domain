@@ -1,5 +1,5 @@
 import clsx from 'classnames';
-import { type FormEvent, useState } from 'react';
+import { type FormEvent, useState, useEffect } from 'react';
 import {
   json,
   type ActionFunction,
@@ -140,6 +140,11 @@ export default function EditPage() {
       ([, id]) => (record.id ?? FreeDomains?.[0]?.[1]) === id
     )?.[0]
   );
+
+  useEffect(() => {
+    if (record.zone_id)
+      setDomain(FreeDomains.find(([, id]) => record.zone_id === id)?.[0]);
+  }, [record]);
 
   function validator(event: FormEvent) {
     switch (event.target.name) {
@@ -322,7 +327,13 @@ export default function EditPage() {
                   name='_action'
                   value='delete'
                   disabled={state !== 'idle'}
-                  onClick={() => confirm(t('domain.confirm_delete'))}
+                  onClick={(e) => {
+                    e.preventDefault();
+                    if (confirm(t('domain.confirm_delete'))) {
+                      this.form.submit();
+                    }
+                    return false;
+                  }}
                   className={clsx('btn btn-warning', {
                     'btn-disabled': state !== 'idle'
                   })}>
