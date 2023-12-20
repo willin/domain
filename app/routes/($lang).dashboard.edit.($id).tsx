@@ -327,13 +327,13 @@ export default function EditPage() {
                   name='_action'
                   value='delete'
                   disabled={state !== 'idle'}
-                  onClick={(e) => {
-                    e.preventDefault();
-                    if (confirm(t('domain.confirm_delete'))) {
-                      this.form.submit();
-                    }
-                    return false;
-                  }}
+                  // onClick={(e) => {
+                  //   e.preventDefault();
+                  //   if (confirm(t('domain.confirm_delete'))) {
+                  //     this.form.submit();
+                  //   }
+                  //   return false;
+                  // }}
                   className={clsx('btn btn-warning', {
                     'btn-disabled': state !== 'idle'
                   })}>
