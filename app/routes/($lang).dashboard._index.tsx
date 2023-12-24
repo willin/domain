@@ -160,6 +160,15 @@ export default function Dashboard() {
                 {t('common.donate')}
               </a>
             </li>
+            <li>
+              <a
+                className='text-secondary'
+                href='https://alias.willin.wang'
+                target='_blank'
+                rel='noreferrer'>
+                {t('common.alias')}
+              </a>
+            </li>
           </ul>
         </div>
       </section>

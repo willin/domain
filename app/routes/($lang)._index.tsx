@@ -52,6 +52,15 @@ export default function Index() {
           {t('common.login')}
         </button>
       </Form>
+      <div className='my-2'>
+        <a
+          className='link text-secondary'
+          href='https://alias.willin.wang'
+          target='_blank'
+          rel='noreferrer'>
+          {t('common.alias')}
+        </a>
+      </div>
       <h2 className='my-4 text-2xl'>{t('common.rank')}</h2>
       <ol className='list-decimal list-inside'>
         {sites.map(([name, count]) => (

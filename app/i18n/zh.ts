@@ -2,6 +2,7 @@ import type { I18nDict } from 'remix-i18n';
 
 export const dict: I18nDict = {
   common: {
+    alias: '申请 Fediverse/Mastodon 别名',
     total: '总计域名记录',
     login: '申请 / 管理',
     logout: '退出登录',
