@@ -10,10 +10,12 @@ export const loader: LoaderFunction = async ({ context, params }) => {
 
   return json({
     sites,
-    counter: counter.map(([name, count]) => [
-      FreeDomains.find(([n, i]) => i === name)?.[0] ?? name,
-      count
-    ])
+    counter: counter
+      .map(([name, count]) => [
+        FreeDomains.find(([n, i]) => i === name)?.[0] || '',
+        count
+      ])
+      .filter((item) => item?.[0])
   });
 };
 
