@@ -171,6 +171,7 @@ export class RecordService implements IRecordService {
       ttl = 1,
       purpose = ''
     } = params;
+    if (!zone_id) return false;
     const { success } = await this.#db
       .prepare(
         'INSERT INTO records (username, pending, purpose, name, content, type, zone_id, ttl, proxiable, priority, raw) VALUES (?1, ?2, ?3, ?4, ?5, ?6, ?7, ?8, ?9, ?10, ?11)'
