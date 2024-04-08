@@ -149,7 +149,7 @@ export default function EditPage() {
   function validator(event: FormEvent) {
     switch (event.target.name) {
       case 'name': {
-        setName(event.target.value.trim());
+        setName(event.target.value.trim().toLowerCase());
         break;
       }
       case 'zone_id': {
