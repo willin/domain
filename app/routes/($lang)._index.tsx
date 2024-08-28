@@ -12,7 +12,7 @@ export const loader: LoaderFunction = async ({ context, params }) => {
     sites,
     counter: counter
       .map(([name, count]) => [
-        FreeDomains.find(([n, i]) => i === name)?.[0] || '',
+        name === 'total' ? name : FreeDomains.find(([n, i]) => i === name)?.[0] || '',
         count
       ])
       .filter((item) => item?.[0])
