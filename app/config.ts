@@ -1,7 +1,7 @@
 export enum PendingStatus {
-  APPROVED,
-  PENDING,
-  DECLINED
+  APPROVED = 0,
+  PENDING = 1,
+  DECLINED = 2
 }
 
 export const MAX_LIMIT_USER = 0 as const;
@@ -11,7 +11,7 @@ export const MAX_LIMIT_ADMIN = 100 as const;
 
 export const AdminUsers = ['willin'] as const;
 
-export const DNSType = ['A', 'AAAA', 'CNAME', 'NS', 'TXT'] as const;
+export const DNSType = ['CNAME'] as const; //['A', 'AAAA', 'CNAME', 'NS', 'TXT'] as const;
 
 export const BlockedList = [
   'about',
